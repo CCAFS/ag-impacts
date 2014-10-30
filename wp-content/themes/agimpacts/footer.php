@@ -1,9 +1,7 @@
-  <div class="footer clearfix">
-  </div>
+<footer >
+	<?php wp_footer(); ?>	
+</footer>
 
-</div>
-
-<?php wp_footer(); ?>
 </body>
 
 </html>
