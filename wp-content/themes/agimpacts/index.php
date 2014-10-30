@@ -1,21 +1,5 @@
 <?php get_header(); ?>
 
-<div id="content-menubar">
-      <div class="row">
-        <ul id="breadcrumb" class="left">
-          <li>HOME</li>
-        </ul>
-        <div id="search" class="right">
-          <form class="pure-form">
-            <input type="text" id="input-search" placeholder="Search" value="" />
-            <button type="submit" id="btn-search" class="pure-button button-small">
-                <i class="fa fa-search"></i> 
-            </button>
-          </form>
-        </div>
-  </div>
-</div>
-
 <section id="content" class="row"> 
   <div id="home-content">
     <img class="left" src="<?php echo get_template_directory_uri(); ?>/img/images/ag-home-image.png">

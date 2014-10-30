@@ -44,5 +44,20 @@
         <div id="partners-logo" class="right"><img src="<?php echo get_template_directory_uri(); ?>/img/partners-logo.png"></div>
       </div>
     </header>  
+    <div id="content-menubar">
+      <div class="row">
+        <ul id="breadcrumb" class="left">
+          <li>HOME</li>
+        </ul>
+        <div id="search" class="right">
+          <form class="pure-form">
+            <input type="text" id="input-search" placeholder="Search" value="" />
+            <button type="submit" id="btn-search" class="pure-button button-small">
+                <i class="fa fa-search"></i> 
+            </button>
+          </form>
+        </div>
+  </div>
+</div>
      
    
