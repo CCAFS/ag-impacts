@@ -177,3 +177,29 @@ button#btn-login {
     color:#888; 
     
 }
+
+#loading{
+  display:none; 
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+  opacity: 0.6;
+}
+#loading img{
+  position: absolute;
+  top: 44%;
+  left: 50%;
+}
+
+.pure-alert-error {
+    background-color: #D13C38;
+    color: #fff;
+}
+
+.ag-state-error {
+  border: 1px solid #cd0a0a !important;
+  /*background: #fef1ec url("images/ui-bg_glass_95_fef1ec_1x400.png") 50% 50% repeat-x;*/
+  color: #cd0a0a !important;
+}
