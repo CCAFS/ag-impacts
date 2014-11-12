@@ -2,12 +2,7 @@ function validDoi(doi) {
   $("#loading").show();
   clearForm();
 
-  if (doi == '') {
-    $("#doi").addClass("ag-state-error");
-    $("#loading").fadeOut('slow');
-//    $("#alert-div").addClass("pure-alert-error");
-  } else {
-
+  if (validateMyAjaxInputs()) {
     $.ajax({
       url: "./wp-content/themes/agimpacts/xmldoicreator.php",
       type: "POST",
@@ -20,22 +15,44 @@ function validDoi(doi) {
 //      $("#result").show();
       }
     });
+  } else {
+    $("#loading").fadeOut('slow');
   }
+}
+
+function validateMyAjaxInputs() {
+
+  // Start validation:
+  $.validity.start();
+
+  // Validator methods go here:
+
+  // For instance:
+  $("#doi").require("Doi is required to validate");
+
+  // etc.
+
+  // All of the validator methods have been called:
+  // End the validation session:
+  var result = $.validity.end();
+
+  // Return whether it's okay to proceed with the Ajax:
+  return result.valid;
 }
 
 function saveArticle(form) {
   $.ajax({
-    url: "./wp-content/themes/agimpacts/saveArticle.php?"+form,
+    url: "./wp-content/themes/agimpacts/saveArticle.php?" + form,
     type: "POST",
     success: function(result) {
-      if(result == 1) {
+      if (result == 1) {
         var n = noty({
           layout: 'top',
           type: 'success',
           timeout: 6000,
           text: 'Saved data'
         });
-        $('#myform')[0].reset();
+        $('#articleForm')[0].reset();
       } else {
 //        alert(result);
         var n = noty({
@@ -105,11 +122,16 @@ function xmlDoiReader(data) {
     }
     $("#author").val(auts);
   } else {
-    alert('DOI Not Found');
+    var n = noty({
+      layout: 'top',
+      type: 'warning',
+      timeout: 6000,
+      text: 'DOI not found'
+    });
   }
 }
 
-function clearForm(){
+function clearForm() {
   $("#title").val('');
   $("#journal").val('');
   $("#year").val('');

@@ -30,6 +30,7 @@ $article['page_start'] = $_GET['pstart'];
 $article['page_end'] = $_GET['pend'];
 $article['reference'] = $_GET['reference'];
 $article['paper_title'] = $_GET['title'];
+$article['wp_user_id'] = get_current_user_id();
 $tablename = $wpdb->prefix . 'article';
 $rows_affected = $wpdb->insert($tablename, $article);
 //echo "<pre>".print_r($_GET,true)."</pre>";

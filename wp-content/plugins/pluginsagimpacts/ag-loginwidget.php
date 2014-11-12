@@ -63,7 +63,7 @@ class PCLoginWidget extends WP_Widget {
                   email = $("#regemail"),
                   password = $("#regpwd"),
                   repassword = $("#regrepwd"),
-                  allFields = $([]).add(name).add(email).add(password).add(repassword ).add(user ).add(lastname ),
+                  allFields = $([]).add(name).add(email).add(password).add(repassword).add(user).add(lastname),
                   tips = $(".validateTips");
 
           function updateTips(t) {
@@ -95,7 +95,7 @@ class PCLoginWidget extends WP_Widget {
               return true;
             }
           }
-          
+
           function checkPass(o, l, n) {
             if (o.val() != l.val()) {
               o.addClass("ui-state-error");
@@ -122,8 +122,34 @@ class PCLoginWidget extends WP_Widget {
             valid = valid && checkRegexp(password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
 
             if (valid) {
-              document.getElementById("newuserform").submit();
-              dialog.dialog("close");
+              $.ajax({
+                url: "./wp-content/themes/agimpacts/signup.php?" + $("#newuserform").serialize(),
+                type: "POST",
+                success: function(result) {
+                  if (result != '') {
+                    var n = noty({
+                      layout: 'top',
+                      type: 'error',
+                      timeout: 6000,
+                      text: result
+                    });
+                  } else {
+                    dialog.dialog("close");
+                    var n = noty({
+                      layout: 'top',
+                      type: 'success',
+                      timeout: 3000,
+                      text: 'User created'
+                    });
+
+                  }
+                },
+                complete: function() {
+
+                }
+              });
+              //              document.getElementById("newuserform").submit();
+              //              dialog.dialog("close");
             }
             return valid;
           }
@@ -164,29 +190,29 @@ class PCLoginWidget extends WP_Widget {
 
         <form id="newuserform" name="newuserform" method="post">
           <?php
-            if ($_POST) {
+          if ($_POST) {
 
-              if (isset($_POST['register']) && $_POST['register'] == 1) {
-                $datosUsuario = array();
+            if (isset($_POST['register']) && $_POST['register'] == 1) {
+              $datosUsuario = array();
 
-                $datosUsuario['user_login'] = $_POST['reguser'];
-                $datosUsuario['user_pass'] = $_POST['regpwd'];
-                $datosUsuario['user_email'] = $_POST['regemail'];
-                $datosUsuario['first_name'] = $_POST['regname'];
-                $datosUsuario['last_name'] = $_POST['reglastname'];
-                $datosUsuario['user_inst'] = $_POST['reginstitution'];
+              $datosUsuario['user_login'] = $_POST['reguser'];
+              $datosUsuario['user_pass'] = $_POST['regpwd'];
+              $datosUsuario['user_email'] = $_POST['regemail'];
+              $datosUsuario['first_name'] = $_POST['regname'];
+              $datosUsuario['last_name'] = $_POST['reglastname'];
+              $datosUsuario['user_inst'] = $_POST['reginstitution'];
 
-                if ($this->registerUser($datosUsuario)) {
+              if ($this->registerUser($datosUsuario)) {
 //                  wp_redirect(get_bloginfo('url'));
-                }
               }
             }
-            ?>
+          }
+          ?>
           <fieldset>
             <label for="name">Username</label>
-            <input type="text" name="reguser" id="reguser" value="pepepe" class="text ui-widget-content ui-corner-all">
+            <input type="text" name="reguser" id="reguser" value="" class="text ui-widget-content ui-corner-all">
             <label for="email">Email</label>
-            <input type="text" name="regemail" id="regemail" value="pepepe@g.com" class="text ui-widget-content ui-corner-all">
+            <input type="text" name="regemail" id="regemail" value="" class="text ui-widget-content ui-corner-all">
             <label for="name">Institution</label>
             <input type="text" name="reginstitution" id="reginstitution" class="text ui-widget-content ui-corner-all">
             <label for="name">First Name</label>
@@ -194,36 +220,36 @@ class PCLoginWidget extends WP_Widget {
             <label for="name">Last Name</label>
             <input type="text" name="reglastname" id="reglastname" class="text ui-widget-content ui-corner-all">
             <label for="password">Password</label>
-            <input type="password" name="regpwd" id="regpwd" value="pepepe" class="text ui-widget-content ui-corner-all">
+            <input type="password" name="regpwd" id="regpwd" value="" class="text ui-widget-content ui-corner-all">
             <label for="password">Repeat Password</label>
             <input type="password" name="regrepwd" id="regrepwd" class="text ui-widget-content ui-corner-all">
-            <label><input type="checkbox" name="agree"> I agree terms of use and privacy </label>
+            <!--<label><input type="checkbox" name="agree"> I agree terms of use and privacy </label>-->
             <input type="hidden" name="register" value="1">
             <!-- Allow form submission with keyboard without duplicating the dialog button -->
-            <input type="submit" value="Aceptar">
+            <!--<input type="submit" value="Aceptar">-->
           </fieldset>
         </form>
       </div>
 
       <!--<form method="post" class="loginwidgetregform">-->
 
-        
 
-        <!--        <label>Usuario:</label>
-                <input type="text" name="reguser"><br/>
-                <label>Contraseña:</label>
-                <input type="password" name="regpwd"><br/>
-                <label>Email:</label>
-                <input type="text" name="regemail"><br/>
-                <label>Nombres:</label>
-                <input type="text" name="regname"><br/>
-                <label>Apellidos:</label>
-                <input type="text" name="reglastname"><br/>
-                <label>Teléfono:</label>
-                <input type="text" name="regtel"><br/>
-        
-                <input type="hidden" name="register" value="1">
-                <input type="submit" value="Registrarme">-->
+
+      <!--        <label>Usuario:</label>
+              <input type="text" name="reguser"><br/>
+              <label>Contraseña:</label>
+              <input type="password" name="regpwd"><br/>
+              <label>Email:</label>
+              <input type="text" name="regemail"><br/>
+              <label>Nombres:</label>
+              <input type="text" name="regname"><br/>
+              <label>Apellidos:</label>
+              <input type="text" name="reglastname"><br/>
+              <label>Teléfono:</label>
+              <input type="text" name="regtel"><br/>
+
+              <input type="hidden" name="register" value="1">
+              <input type="submit" value="Registrarme">-->
       <!--</form>-->
 
       <?php
@@ -243,20 +269,6 @@ class PCLoginWidget extends WP_Widget {
 //    echo $args['after_widget'];
   }
 
-  function registerUser($datos) {
-    $userid = wp_insert_user($datos);
-//echo "$$".is_wp_error($userid);
-    if (!is_wp_error($userid)) {
-      update_user_meta($userid, 'user_inst', $datos['user_inst']);
-
-//      wp_set_auth_cookie($userid);
-      return true;
-    } else {
-      $error_string = $userid->get_error_message();
-      echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
-      return false;
-    }
-  }
 }
 
 add_action('widgets_init', function() {
