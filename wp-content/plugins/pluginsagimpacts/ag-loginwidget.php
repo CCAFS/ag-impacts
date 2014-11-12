@@ -177,6 +177,7 @@ class PCLoginWidget extends WP_Widget {
         <input type="text" name="log" placeholder="Username" />
         <input type="password" name="pwd" placeholder="Password" />
         <button type="submit" id="btn-login" class="pure-button button-small"> Log in</button>
+        <a href="<?php echo bloginfo('url') . '/wp-login.php'; ?>/wp-login.php?action=lostpassword">Lost your password?</a>
       </form>
       <div id="dialog-form" title="Create new user">
         <p class="validateTips">All form fields are required.</p>
