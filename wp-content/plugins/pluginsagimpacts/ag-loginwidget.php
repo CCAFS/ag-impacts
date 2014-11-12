@@ -117,7 +117,7 @@ class PCLoginWidget extends WP_Widget {
             valid = valid && checkLength(email, "Email", 6, 80);
             valid = valid && checkLength(password, "Password", 5, 16);
             valid = valid && checkPass(password, repassword, "Valid your password");
-            valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+//            valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
             valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
             valid = valid && checkRegexp(password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
 
@@ -133,19 +133,12 @@ class PCLoginWidget extends WP_Widget {
                       timeout: 6000,
                       text: result
                     });
-                  } else {
-                    dialog.dialog("close");
-                    var n = noty({
-                      layout: 'top',
-                      type: 'success',
-                      timeout: 3000,
-                      text: 'User created'
-                    });
-
+                  } else {                   
+                    location.reload();
                   }
                 },
                 complete: function() {
-
+                  
                 }
               });
               //              document.getElementById("newuserform").submit();
@@ -189,25 +182,6 @@ class PCLoginWidget extends WP_Widget {
         <p class="validateTips">All form fields are required.</p>
 
         <form id="newuserform" name="newuserform" method="post">
-          <?php
-          if ($_POST) {
-
-            if (isset($_POST['register']) && $_POST['register'] == 1) {
-              $datosUsuario = array();
-
-              $datosUsuario['user_login'] = $_POST['reguser'];
-              $datosUsuario['user_pass'] = $_POST['regpwd'];
-              $datosUsuario['user_email'] = $_POST['regemail'];
-              $datosUsuario['first_name'] = $_POST['regname'];
-              $datosUsuario['last_name'] = $_POST['reglastname'];
-              $datosUsuario['user_inst'] = $_POST['reginstitution'];
-
-              if ($this->registerUser($datosUsuario)) {
-//                  wp_redirect(get_bloginfo('url'));
-              }
-            }
-          }
-          ?>
           <fieldset>
             <label for="name">Username</label>
             <input type="text" name="reguser" id="reguser" value="" class="text ui-widget-content ui-corner-all">
@@ -230,37 +204,12 @@ class PCLoginWidget extends WP_Widget {
           </fieldset>
         </form>
       </div>
-
-      <!--<form method="post" class="loginwidgetregform">-->
-
-
-
-      <!--        <label>Usuario:</label>
-              <input type="text" name="reguser"><br/>
-              <label>Contraseña:</label>
-              <input type="password" name="regpwd"><br/>
-              <label>Email:</label>
-              <input type="text" name="regemail"><br/>
-              <label>Nombres:</label>
-              <input type="text" name="regname"><br/>
-              <label>Apellidos:</label>
-              <input type="text" name="reglastname"><br/>
-              <label>Teléfono:</label>
-              <input type="text" name="regtel"><br/>
-
-              <input type="hidden" name="register" value="1">
-              <input type="submit" value="Registrarme">-->
-      <!--</form>-->
-
       <?php
     else:
-
       $user = wp_get_current_user();
       ?>
-
       <div class="perfil">
         Bienvenido, <?php echo $user->first_name . " - "; ?> <a href="<?php echo wp_logout_url(get_bloginfo('url')); ?>">Desconectarse</a>
-
       </div>
 
     <?php

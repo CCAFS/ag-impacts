@@ -31,7 +31,7 @@ if ($_GET) {
     $datosUsuario['user_inst'] = $_GET['reginstitution'];
 
     if (registerUser($datosUsuario)) {
-//                  wp_redirect(get_bloginfo('url'));
+//      wp_redirect(get_bloginfo('url'));
     }
   }
 }
@@ -42,12 +42,11 @@ function registerUser($datos) {
   if (!is_wp_error($userid)) {
     update_user_meta($userid, 'user_inst', $datos['user_inst']);
 
-//      wp_set_auth_cookie($userid);
+    wp_set_auth_cookie($userid);
     return true;
   } else {
     $error_string = $userid->get_error_message();
     echo $error_string;
-//    echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
     return false;
   }
 }

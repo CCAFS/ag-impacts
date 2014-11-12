@@ -34,6 +34,9 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/main.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/jquery.validity.css">
     <script src="<?php echo get_template_directory_uri(); ?>/js/vendor/modernizr-2.6.2.min.js"></script>
+    <script type="text/javascript">
+      var templateUrl = '<?= get_bloginfo("url"); ?>';
+    </script>
     <script>
       (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -68,12 +71,12 @@
           }
           ?>
           <div id="login" class="right">
-<?php dynamic_sidebar('secundario'); ?>
+            <?php dynamic_sidebar('secundario'); ?>
           </div>
         </div>
       </nav>
       <div class="row">
-        <div id="ag-logo" class="left" ><img src="<?php echo get_template_directory_uri(); ?>/img/ag-logo.png"></div>
+        <div id="ag-logo" class="left" ><a href="<?php echo get_bloginfo('url'); ?>"><img src="<?php echo get_template_directory_uri(); ?>/img/ag-logo.png"></a></div>
         <div id="partners-logo" class="right"><img src="<?php echo get_template_directory_uri(); ?>/img/partners-logo.png"></div>
       </div>
     </header>  

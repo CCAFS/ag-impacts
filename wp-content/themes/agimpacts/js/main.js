@@ -4,7 +4,7 @@ function validDoi(doi) {
 
   if (validateMyAjaxInputs()) {
     $.ajax({
-      url: "./wp-content/themes/agimpacts/xmldoicreator.php",
+      url: templateUrl+"/wp-content/themes/agimpacts/xmldoicreator.php",
       type: "POST",
       data: {doi: doi},
       success: function(result) {
@@ -42,7 +42,7 @@ function validateMyAjaxInputs() {
 
 function saveArticle(form) {
   $.ajax({
-    url: "./wp-content/themes/agimpacts/saveArticle.php?" + form,
+    url: templateUrl+"/wp-content/themes/agimpacts/saveArticle.php?" + form,
     type: "POST",
     success: function(result) {
       if (result == 1) {
