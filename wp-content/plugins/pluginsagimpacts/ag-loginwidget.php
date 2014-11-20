@@ -210,7 +210,7 @@ class PCLoginWidget extends WP_Widget {
       $user = wp_get_current_user();
       ?>
       <div class="perfil">
-        Bienvenido, <?php echo $user->first_name . " - "; ?> <a href="<?php echo wp_logout_url(get_bloginfo('url')); ?>">Desconectarse</a>
+        Welcome, <?php echo $user->first_name . " - "; ?> <a href="<?php echo wp_logout_url(get_bloginfo('url')); ?>">Desconectarse</a>
       </div>
 
     <?php

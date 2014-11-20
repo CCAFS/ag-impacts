@@ -24,7 +24,7 @@ $article['doi_article'] = $_GET['doi'];
 $article['author'] = $_GET['author'];
 $article['year'] = $_GET['year'];
 $article['journal'] = $_GET['journal'];
-$article['valume'] = $_GET['volume'];
+$article['volume'] = $_GET['volume'];
 $article['issue'] = $_GET['issue'];
 $article['page_start'] = $_GET['pstart'];
 $article['page_end'] = $_GET['pend'];
@@ -32,12 +32,18 @@ $article['reference'] = $_GET['reference'];
 $article['paper_title'] = $_GET['title'];
 $article['wp_user_id'] = get_current_user_id();
 $tablename = $wpdb->prefix . 'article';
-$rows_affected = $wpdb->insert($tablename, $article);
+if ($_GET['article_id']) {
+  $rows_affected = $wpdb->update($tablename, $article,array( 'ID' => $_GET['article_id'] ));
+  $id = $_GET['article_id'];
+} else {
+  $rows_affected = $wpdb->insert($tablename, $article);
+  $id = $wpdb->insert_id;
+}
 //echo "<pre>".print_r($_GET,true)."</pre>";
 if(!$rows_affected) {
   $wpdb->show_errors();
   $wpdb->print_error();
 } else {
-  echo 1;
+  echo $id;
 }
 

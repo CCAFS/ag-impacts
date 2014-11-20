@@ -4,7 +4,7 @@ function validDoi(doi) {
 
   if (validateMyAjaxInputs()) {
     $.ajax({
-      url: templateUrl+"/wp-content/themes/agimpacts/xmldoicreator.php",
+      url: templateUrl + "/wp-content/themes/agimpacts/xmldoicreator.php",
       type: "POST",
       data: {doi: doi},
       success: function(result) {
@@ -21,38 +21,27 @@ function validDoi(doi) {
 }
 
 function validateMyAjaxInputs() {
-
-  // Start validation:
   $.validity.start();
-
-  // Validator methods go here:
-
-  // For instance:
   $("#doi").require("Doi is required to validate");
-
-  // etc.
-
-  // All of the validator methods have been called:
-  // End the validation session:
   var result = $.validity.end();
-
-  // Return whether it's okay to proceed with the Ajax:
   return result.valid;
 }
 
 function saveArticle(form) {
   $.ajax({
-    url: templateUrl+"/wp-content/themes/agimpacts/saveArticle.php?" + form,
+    url: templateUrl + "/wp-content/themes/agimpacts/saveArticle.php?" + form,
     type: "POST",
     success: function(result) {
-      if (result == 1) {
+      if (!isNaN(result) && !isNaN(parseInt(result, 10))) {
         var n = noty({
           layout: 'top',
           type: 'success',
           timeout: 6000,
           text: 'Saved data'
         });
-        $('#articleForm')[0].reset();
+//        $("#article_id").val(result);
+        $(location).attr('href', templateUrl + '/articleDetail?article='+result);
+//        $('#articleForm')[0].reset();
       } else {
 //        alert(result);
         var n = noty({
@@ -69,26 +58,26 @@ function saveArticle(form) {
   });
 }
 
-function categoryChosen(id, form, page) {
-  page = page || 1;
-  document.location.hash = "category=" + id + ((form) ? "/" + form : "");
-  if (transport)
-    transport.postMessage("category=" + id + ((form) ? "/" + form : ""));
-  $.ajax({
-    url: "result.php?" + form,
-    type: "POST",
-    data: {category: id, page: page},
-    success: function(result) {
-      $("#loading").show();
-      $("#result").hide();
-      $("#result").html(result);
-    },
-    complete: function() {
-      $("#loading").fadeOut('slow');
-      $("#result").show();
-    }
-  });
-}
+//function categoryChosen(id, form, page) {
+//  page = page || 1;
+//  document.location.hash = "category=" + id + ((form) ? "/" + form : "");
+//  if (transport)
+//    transport.postMessage("category=" + id + ((form) ? "/" + form : ""));
+//  $.ajax({
+//    url: "result.php?" + form,
+//    type: "POST",
+//    data: {category: id, page: page},
+//    success: function(result) {
+//      $("#loading").show();
+//      $("#result").hide();
+//      $("#result").html(result);
+//    },
+//    complete: function() {
+//      $("#loading").fadeOut('slow');
+//      $("#result").show();
+//    }
+//  });
+//}
 
 function xmlDoiReader(data) {
   if (window.DOMParser) {
@@ -100,7 +89,7 @@ function xmlDoiReader(data) {
     xmlDoc.loadXML(data);
   }
 
-  if (xmlDoc.doctype == null) {
+  if (data != 'null' && xmlDoc.doctype == null) {
     if (xmlDoc.getElementsByTagName("title")[0])
       $("#title").val(xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue);
     if (xmlDoc.getElementsByTagName("year")[0])
@@ -129,6 +118,52 @@ function xmlDoiReader(data) {
       text: 'DOI not found'
     });
   }
+}
+
+function addEstimate(form) {
+  form = form || '';
+  $("#loading").show();
+  id = parseInt($("#estimate_count").val()) + 1;
+  $.ajax({
+    url: templateUrl + "/wp-content/themes/agimpacts/estimateForm.php?" + form,
+    type: "POST",
+    data: {id: id},
+    success: function(result) {
+      $("#estimateDiv").append(result);
+    },
+    complete: function() {
+      $("#loading").fadeOut('slow');
+      $("#estimate_count").val(id);
+//      $("#result").show();
+    }
+  });
+}
+
+function saveall(form, article) {
+  $.ajax({
+    url: templateUrl + "/wp-content/themes/agimpacts/saveAllEstimates.php?article=" + article,
+    type: "POST",
+    data: form,
+    success: function(result) {
+//      $("#estimateDiv").append(result);
+      if (result != '') {
+        var n = noty({
+          layout: 'top',
+          type: 'error',
+          timeout: 6000,
+          text: result
+        });
+        console.log(result);
+      } else {
+        location.reload();
+      }
+    },
+    complete: function() {
+//      $("#loading").fadeOut('slow');
+//      $("#estimate_count").val(id);
+//      $("#result").show();
+    }
+  });
 }
 
 function clearForm() {

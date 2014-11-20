@@ -28,7 +28,7 @@ function pcadminActive() {
                 `author` VARCHAR(45) NULL,
                 `year` INT NULL,
                 `journal` VARCHAR(45) NULL,
-                `valume` VARCHAR(45) NULL,
+                `volume` VARCHAR(45) NULL,
                 `issue` VARCHAR(45) NULL,
                 `page_start` SMALLINT NULL,
                 `page_end` SMALLINT NULL,
@@ -204,7 +204,7 @@ function createDataArticleArray($line) {
   $article['author'] = $line[40];
   $article['year'] = $line[8];
   $article['journal'] = $line[3];
-  $article['valume'] = $line[4];
+  $article['volume'] = $line[4];
   $article['issue'] = $line[5];
   $article['page_start'] = $line[6];
   $article['page_end'] = $line[7];
@@ -219,7 +219,7 @@ function createDataEstimateArray($articleID,$line) {
   $estimate['crop'] = $line[9];
   $estimate['scientific_name'] = $line[10];
   $estimate['projection_co2'] = (trim($line[11]) != '' && $line[11]!= 'N/A')?$line[11]:0;
-  $estimate['baseline_co2'] = (trim($line[12]) != '' && $line[12]!= 'N/A')?$line[12]:0;;
+  $estimate['baseline_co2'] = (trim($line[12]) != '' && $line[12]!= 'N/A')?$line[12]:0;
   $estimate['temp_change'] =(trim($line[13]) != '' && $line[13]!= 'N/A')?$line[13]:0;
   $estimate['precipitation_change'] = ($line[14]!= '' && $line[14]!= 'N/A')?$line[14]:0;
   $estimate['yield_change'] = ($line[15]!= '' && $line[15]!= 'N/A')?$line[15]:0;

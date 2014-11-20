@@ -22,7 +22,7 @@
   if ($stringData != "") {
     echo $stringData;
   } else {
-    echo "nulll";
+    echo "null";
   }
   $fh = fopen("doi.xml", 'w');
   fwrite($fh, $stringData);

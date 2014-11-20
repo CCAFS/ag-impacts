@@ -203,3 +203,38 @@ button#btn-login {
   /*background: #fef1ec url("images/ui-bg_glass_95_fef1ec_1x400.png") 50% 50% repeat-x;*/
   color: #cd0a0a !important;
 }
+
+.paginate {
+  padding: 0px;
+  margin: 0px;
+  height: 30px;
+  display: block;
+  text-align: center;
+}
+
+.paginate li {
+  display: inline-block;
+  list-style: none;
+  padding: 0px;
+  margin-right: 1px;
+  width: 30px;
+  text-align: center;
+  line-height: 25px;
+  background-color: #4bc8dc;
+}
+
+.paginate .active {
+  display: inline-block;
+  list-style: none;
+  padding: 0px;
+  margin-right: 1px;
+  width: 30px;
+  text-align: center;
+  line-height: 25px;
+  background-color: #1281aa;
+}
+
+.paginate li a{
+  color:#FFFFFF;
+  text-decoration:none;
+}
