@@ -23,7 +23,7 @@ table, td, th{
 	width:370px;
 }
 #results{
-	border:1px solid;
+	/*border:1px solid;*/
 	display: none;
 	padding: 0px 10px 10px 10px;
 }
