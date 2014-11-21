@@ -177,8 +177,7 @@ if ($last < 1) {
       <h3> <a href="javascript:$(location).attr('href', templateUrl + '/articleDetail');">You have not articles, add one +</a></h3>
     <?php endif; ?>
   </div>
-  
+  <div id="pagination_controls" style="float:right; display:none"></div>
 </section>
-<div id="pagination_controls" style="float:right; display:none"></div>
 <script> request_page(<?php echo $page ?>, $('#filtersh').serialize());</script>
 
