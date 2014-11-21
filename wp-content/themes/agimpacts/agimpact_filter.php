@@ -4,16 +4,15 @@
  * @package WordPress
  * @subpackage AMKNToolbox
  */
-require('../../../../wp-load.php');
+//require('../../../../wp-load.php');
 get_header();
 ?>
-<link rel="stylesheet" href="js/select2/select2.css">
-<link rel="stylesheet" href="js/tablesorter/css/theme.green.css">
-<script src="js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="js/tablesorter/js/jquery.tablesorter.js"></script>
-<script src="js/select2/select2.min.js"></script>
-<script type="text/javascript" src="js/agimpact_filter.js"></script>
-<link rel="stylesheet" href="agimpact_filter.css">
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/select2/select2.css">
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/tablesorter/css/theme.green.css">
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/tablesorter/js/jquery.tablesorter.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/select2/select2.min.js"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/agimpact_filter.js"></script>
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/agimpact_filter.css">
 <section id="content" class="row"> 
 
   <form action="action" method="POST" class="pure-form pure-form-aligned">

@@ -1,9 +1,9 @@
 <?php
-require('../../../../wp-load.php');
+require('../../../wp-load.php');
 // This needs to be set, in order for the plugin work, 
 //in the case when the request variable is empty, throws 
 //an e_notice of the empty array
-error_reporting(0);
+//error_reporting(0);
 
 $option = $_REQUEST['option'];
 
@@ -305,8 +305,8 @@ function dataTable() {
   $table = "<p>
 	<div id='downloadFile'>
 		<h3>Download Data</h3>
-		<a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='img/csv.png'></a>
+		<a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='".get_template_directory_uri()."/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='".get_template_directory_uri()."/img/csv.png'></a>
 	</div>
 
 	<table id='resulttable' class='tablesorter'>
@@ -328,6 +328,7 @@ function dataTable() {
 	<tbody>";
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
+      $status = ($result[$i]['doi_article'] == 0)?'new':'Validated';
       $tr = $tr . "<tr>
                     <td>" . $result[$i]['doi_article'] . "</td>
                     <td>" . $result[$i]['spatial_scale'] . "</td>
@@ -339,7 +340,7 @@ function dataTable() {
                     <td>" . $result[$i]['geograph_scope'] . "</td>
                     <td>" . $result[$i]['temp_change'] . "</td>
                     <td>" . $result[$i]['climate_scenario'] . "</td>
-                    <td><!--<input type=\"checkbox\" name='register' value='" . $result[$i]['idEstimate'] . "'>--></td>
+                    <td>".$status."</td>
             </tr>";
     }
     echo $table . $tr . "</tbody>

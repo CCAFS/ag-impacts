@@ -24,7 +24,8 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+    <script src="<?php echo get_template_directory_uri(); ?>/js/jquery-1.11.1.min.js"></script>
     <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.validity.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.noty.packaged.min.js"></script>
@@ -35,7 +36,8 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/jquery.validity.css">
     <script src="<?php echo get_template_directory_uri(); ?>/js/vendor/modernizr-2.6.2.min.js"></script>
     <script type="text/javascript">
-      var templateUrl = '<?= get_bloginfo("url"); ?>';
+      var templateUrl = '<?php get_bloginfo("url"); ?>';
+      var templatePath = '<?php echo get_template_directory_uri(); ?>';
     </script>
     <script>
 //      (function(i, s, o, g, r, a, m) {
