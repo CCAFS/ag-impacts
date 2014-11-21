@@ -34,11 +34,13 @@ if (!isset($myestimates) || is_null($myestimates)) {
   <input type='hidden' id='estimate_id' value='<?php echo $estimate['ID'] ?>'>
   <?php
 }
+//print_r($current_estimate);
 ?>
 <div id="contentEstimate<?php echo $id; ?>">
   <div float="right" style="position: absolute; right: 5px">
+    <button class="pure-button" onclick="$('#estimateForm<?php echo $id; ?>').submit()">Save</button>
     <button class="pure-button" onclick="addEstimate($('#estimateForm<?php echo $id; ?>').serialize())">Duplicate</button>
-    <button class="pure-button" onclick="$('#contentEstimate<?php echo $id; ?>').remove()">Delete</button>
+    <button class="pure-button" onclick="deleteEstimate(<?php echo $id; ?>);">Delete</button>
     <button id="btnHide<?php echo $id; ?>" name="btnHide<?php echo $id; ?>" class="pure-button hideSingle" onclick="$('#estimateForm<?php echo $id; ?>').hide();
         $('#btnHide<?php echo $id; ?>').hide();
         $('#btnShow<?php echo $id; ?>').show();
@@ -52,7 +54,7 @@ if (!isset($myestimates) || is_null($myestimates)) {
   </div>
   <div style='width:180px'><a id='ahide<?php echo $id; ?>' name='ahide' href="javascript:$('#btnHide<?php echo $id; ?>').click();"><h2>Estimate #<?php echo $id; ?></h2></a></div>
   <div style='width:180px'><a id='ashow<?php echo $id; ?>' name='ashow' href="javascript:$('#btnShow<?php echo $id; ?>').click();" style='display:none'><h2>Estimate #<?php echo $id; ?></h2></a></div>
-  <form id="estimateForm<?php echo $id; ?>" class="pure-form pure-form-aligned estiamte-form" action='javascript:void(0)' method="POST">
+  <form id="estimateForm<?php echo $id; ?>" class="pure-form pure-form-aligned estiamte-form" action='' method="POST">
     <fieldset>        
       <div class="pure-control-group">
         <label for="crop">Crop</label>
@@ -147,6 +149,19 @@ if (!isset($myestimates) || is_null($myestimates)) {
         <input id="longitude" name="longitude" type="text" class="pure-input-1-3" placeholder="Longitude" value="<?php echo (isset($current_estimate['longitude'])) ? $current_estimate['longitude'] : ''; ?>">
       </div>
     </fieldset>
+    <?php if(isset($current_estimate['idEstimate'])):?>
+      <input id="estimate_id" name="estimate_id" type="hidden" value="<?php echo $current_estimate['idEstimate']?>">
+    <?php endif;?>
   </form>
   <hr>
+  <script>
+    $("#estimateForm<?php echo $id; ?>").on('submit', function(e) {
+      var form = $(this);//this refers to the form
+//      alert(form.serialize());
+//    var notes_id = form.find('input[name=crop]').val();
+//    var notes_text = form.find('textarea[id=comment]').val();
+      saveOne(form.serialize(),<?php echo $current_estimate['article_id'] ?>);
+      e.preventDefault();
+    });
+  </script>
 </div>

@@ -47,9 +47,16 @@ if (!empty($roles)) {
 } else {
   $role = false;
 }
+if (isset($_GET['doi']) && trim($_GET['doi']) != '') {
+  $where .= " AND a.doi_article LIKE '".$_GET['doi']."' ";
+}
+
+if (isset($_GET['title']) && trim($_GET['title']) != '') {
+  $where .= " AND a.paper_title LIKE '%".$_GET['title']."%' ";
+}
 $tablename = $wpdb->prefix . 'article';
 $myarticles = $wpdb->get_results("SELECT * FROM $tablename WHERE " . $where);
-$sql1 = "SELECT count(*) as total FROM $tablename WHERE " . $where;
+$sql1 = "SELECT count(*) as total FROM $tablename a WHERE " . $where;
 $result = $wpdb->get_row($sql1);
 
 $total_rows = $result->total;
@@ -124,8 +131,21 @@ if ($last < 1) {
 </script>
 <div id="loading"><img style="" src="<?php echo get_template_directory_uri(); ?>/img/loading.gif" alt="Loader" /></div>
 <section id="content" class="row">
-  <form id="filter">
-
+  <form id="filtersh" name="filtersh" class="pure-form pure-form-stacked">
+    <fieldset>
+      <legend>Filter</legend>
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-3">
+          <label for="doi">DOI</label>
+          <input id="doi" name="doi" type="text" value="<?php echo $_GET['doi']?>">
+        </div>
+        <div class="pure-u-1 pure-u-md-1-3">
+          <label for="title">Title</label>
+          <input id="title" name="title" type="text" value="<?php echo $_GET['title']?>">
+        </div>
+      </div>
+      <button type="submit" class="pure-button pure-button-primary">Search</button>
+    </fieldset>
   </form>
   <!--  <div data-role="header">
       <h1>Article List</h1>
@@ -145,6 +165,7 @@ if ($last < 1) {
             <th data-priority="3">Status</th>
             <th data-priority="4">Year</th>
             <th data-priority="5">Author(s)</th>
+            <th data-priority="5"># Estimates</th>
             <th></th>
           </tr>
         </thead>
@@ -153,10 +174,11 @@ if ($last < 1) {
         </tbody>
       </table>
     <?php else : ?>
-    <h3> <a href="javascript:$(location).attr('href', templateUrl + '/articleDetail');">You have not articles, add one +</a></h3>
+      <h3> <a href="javascript:$(location).attr('href', templateUrl + '/articleDetail');">You have not articles, add one +</a></h3>
     <?php endif; ?>
-    <div id="pagination_controls" style="float:right; display:none"></div>
   </div>
+  
 </section>
-<script> request_page(<?php echo $page ?>, $('#filter').serialize());</script>
+<div id="pagination_controls" style="float:right; display:none"></div>
+<script> request_page(<?php echo $page ?>, $('#filtersh').serialize());</script>
 

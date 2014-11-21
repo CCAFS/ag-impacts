@@ -28,6 +28,7 @@ global $wpdb;
 $myarticle = null;
 $myestimates = null;
 if ($_GET['article']) {
+  $articleId = $_GET['article'];
   $tablename = $wpdb->prefix . 'article';
   $myarticle = $wpdb->get_row("SELECT * FROM $tablename WHERE ID = " . $_GET['article']);
   if ($myarticle) {
@@ -51,8 +52,8 @@ if ($_GET['article']) {
     <?php else : ?>
     <?php endif; ?>
     <div float="right" style="position: absolute; right: 5px">
-      <button class="pure-button" onclick="addEstimate()">Add Entry</button> 
-      <button class="pure-button" onclick='$(".estiamte-form").submit()'>Save all</button> 
+      <button class="pure-button" onclick="addEstimate('article_id=<?php echo $_GET['article']?>')">Add Entry</button> 
+      <button class="pure-button" onclick='saveAll()'>Save all</button> 
       <button id="btnha" class="pure-button btnha" onclick="$('.pure-form').hide();
           $('.hideSingle').hide();
           $('.showSingle').show();
@@ -70,7 +71,7 @@ if ($_GET['article']) {
     <div id="estimateDiv">
       <hr>
       <?php
-      if (is_null($myestimates)) {
+      if (is_null($myestimates) || !$myestimates) {
         include(locate_template('estimateForm.php'));
       } else {
         foreach ($myestimates as $key => $estimate) {
@@ -85,7 +86,7 @@ if ($_GET['article']) {
       ?>
     </div>
     <div float="right" style="position: absolute; right: 5px">
-      <button class="pure-button" onclick="addEstimate()">Add Entry</button> <button class="pure-button">Save all</button>
+      <button class="pure-button" onclick="addEstimate('article_id=<?php echo $_GET['article']?>')">Add Entry</button> <button class="pure-button">Save all</button>
       <button id="btnha" class="pure-button btnha" onclick="$('.pure-form').hide();
           $('.hideSingle').hide();
           $('.showSingle').show();
@@ -100,17 +101,18 @@ if ($_GET['article']) {
     </div>
   </div>
 </section>
-<script>
+<!--<script>
   $(".estiamte-form").on('submit', function(e) {
-
+//    alert();
     var form = $(this);//this refers to the form
+//    alert(form.serialize());
 //    var notes_id = form.find('input[name=crop]').val();
 //    var notes_text = form.find('textarea[id=comment]').val();
-    saveall(form.serialize(),<?php echo $_GET['article'] ?>);
+    saveall(form.serialize(),<?php // echo $_GET['article'] ?>);
 //    alert(notes_id+' '+notes_text);
     e.preventDefault();
   });
-</script>
+</script>-->
 <?php
 get_footer();
 

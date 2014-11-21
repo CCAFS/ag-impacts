@@ -30,6 +30,16 @@ if (!empty($roles)) {
   $role = false;
 }
 $tablename = $wpdb->prefix . 'article';
+$tablename2 = $wpdb->prefix . 'estimate';
+
+if (isset($_GET['doi']) && trim($_GET['doi']) != '') {
+  $where .= " AND a.doi_article LIKE '%".$_GET['doi']."%' ";
+}
+
+if (isset($_GET['title']) && trim($_GET['title']) != '') {
+  $where .= " AND a.paper_title LIKE '%".$_GET['title']."%' ";
+}
+
 if (isset($_POST['pn'])) {
   $rpp = preg_replace('#[^0-9]#', '', $_POST['rpp']);
   $last = preg_replace('#[^0-9]#', '', $_POST['last']);
@@ -43,7 +53,8 @@ if (isset($_POST['pn'])) {
   // This sets the range of rows to query for the chosen $pn
   $limit = 'LIMIT ' . ($pn - 1) * $rpp . ',' . $rpp;
 
-  $sql1 = "SELECT * FROM $tablename WHERE $where ORDER BY ID $limit";
+//  $sql1 = "SELECT * FROM $tablename a WHERE $where ORDER BY ID $limit";
+  $sql1 = "SELECT a.*, b.count as count FROM $tablename a LEFT JOIN (SELECT article_id, count(*) as count FROM $tablename2 GROUP by article_id) b ON (a.ID = b.article_id) WHERE $where ORDER BY ID $limit";
   echo $sql1;
   $myarticles = $wpdb->get_results($sql1);
 }
@@ -53,9 +64,10 @@ foreach ($myarticles as $article):
   <tr>
     <td><?php echo $article->doi_article ?></td>
     <td><?php echo $article->paper_title ?></td>
-    <td><?php echo $article->status ?></td>
+    <td><?php echo ($article->status == 0)?'new':'Validated'; ?></td>
     <td><?php echo $article->year ?></td>
     <td><?php echo $article->author ?></td>
+    <td><?php echo ($article->count)?$article->count:0 ?></td>
     <td>
       <button type="button" class="pure-button" onclick="$(location).attr('href', templateUrl + '/articleDetail?article=<?php echo $article->id ?>');">Edit</button>
       <button type="button" class="pure-button" onclick="$(location).attr('href', templateUrl + '/estimate?article=<?php echo $article->id ?>');">Add estimate</button>

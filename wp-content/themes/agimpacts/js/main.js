@@ -40,7 +40,7 @@ function saveArticle(form) {
           text: 'Saved data'
         });
 //        $("#article_id").val(result);
-        $(location).attr('href', templateUrl + '/articleDetail?article='+result);
+        $(location).attr('href', templateUrl + '/articleDetail?article=' + result);
 //        $('#articleForm')[0].reset();
       } else {
 //        alert(result);
@@ -129,7 +129,7 @@ function addEstimate(form) {
     type: "POST",
     data: {id: id},
     success: function(result) {
-      $("#estimateDiv").append(result);
+      $("#estimateDiv").prepend(result);
     },
     complete: function() {
       $("#loading").fadeOut('slow');
@@ -139,7 +139,14 @@ function addEstimate(form) {
   });
 }
 
-function saveall(form, article) {
+function saveAll(){
+  var totalforms = $("#estimate_count").val();
+  for(i=1;i<=totalforms;i++) {
+    $("#estimateForm"+i).submit();
+  }
+}
+
+function saveOne(form, article) {
   $.ajax({
     url: templateUrl + "/wp-content/themes/agimpacts/saveAllEstimates.php?article=" + article,
     type: "POST",
@@ -153,17 +160,47 @@ function saveall(form, article) {
           timeout: 6000,
           text: result
         });
-        console.log(result);
+//        console.log(result);
       } else {
-        location.reload();
+//        location.reload();
       }
     },
     complete: function() {
-//      $("#loading").fadeOut('slow');
-//      $("#estimate_count").val(id);
-//      $("#result").show();
     }
   });
+}
+
+function deleteEstimate(id) {
+  if (confirm("Do you want to delete it?")) {
+    var estimate = $('#estimateForm' + id).find('input[name=estimate_id]').val();
+    $.ajax({
+      url: templateUrl + "/wp-content/themes/agimpacts/deleteEstimate.php",
+      type: "POST",
+      data: {estimate: estimate},
+      success: function(result) {
+        if (!result) {
+          var n = noty({
+            layout: 'top',
+            type: 'error',
+            timeout: 6000,
+            text: result
+          });
+//        console.log(result);
+        } else {
+          var n = noty({
+            layout: 'top',
+            type: 'success',
+            timeout: 6000,
+            text: "Estimate deleted"
+          });
+          $('#contentEstimate' + id).remove();
+//        location.reload();
+        }
+      },
+      complete: function() {
+      }
+    });
+  }
 }
 
 function clearForm() {
