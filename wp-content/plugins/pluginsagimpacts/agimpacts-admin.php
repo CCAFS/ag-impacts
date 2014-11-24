@@ -11,7 +11,7 @@ add_action('admin_menu', 'OpcionMenuMisOpciones');
 function OpcionMenuMisOpciones() {
   add_menu_page('Opciones generales del sitio', 'ag-impacts options', 'manage_options', 'pc-admin.php', 'AdminOpcionesGenerales');
 
-  add_submenu_page('pc-admin.php', 'Importador CSV', 'Importador', 'manage_options', 'pc-admin.php-importador', 'AdminImporterCSV');
+  add_submenu_page('pc-admin.php', 'Importador CSV', 'Importador', 'ag_options', 'pc-admin.php-importador', 'AdminImporterCSV');
 }
 
 register_activation_hook(__FILE__, 'pcadminActive');

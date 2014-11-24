@@ -1,5 +1,4 @@
 <?php
-
 register_sidebar();
 
 register_sidebar(array(
@@ -64,20 +63,42 @@ function validDoi($doi) {
 // Connection are created demand and closed by PHP on exit.
 //  function adb_rest($method, $uri, $querry = NULL, $json = NULL, $options = NULL) {
 //    global $adb_url, $adb_handle, $adb_option_defaults;
+  // Connect 
+  if (!isset($adb_handle))
+    $adb_handle = curl_init();
 
-    // Connect 
-    if (!isset($adb_handle))
-      $adb_handle = curl_init();
+  curl_setopt_array($adb_handle, $adb_option_defaults);
 
-    curl_setopt_array($adb_handle, $adb_option_defaults);
-
-    // send request and wait for responce
+  // send request and wait for responce
 //    $responce = json_decode(curl_exec($adb_handle), true);
-    $responce = curl_exec($adb_handle);
+  $responce = curl_exec($adb_handle);
 
 //    echo "Responce from DB: \n";
 //    echo $responce;
 
-    return($responce);
+  return($responce);
+}
 
+add_action('show_user_profile', 'add_institute');
+add_action('edit_user_profile', 'add_institute');
+
+function add_institute($user) {
+  ?>
+  <h3>Institute info</h3>
+
+  <table class="form-table">
+    <tr>
+      <th><label for="user_inst">Institute</label></th>
+      <td><input type="text" name="user_inst" value="<?php echo esc_attr(get_the_author_meta('user_inst', $user->ID)); ?>" class="regular-text" /></td>
+    </tr>
+  </table>
+  <?php
+}
+
+add_action( 'personal_options_update', 'save_institute' );
+add_action( 'edit_user_profile_update', 'save_institute' );
+
+function save_institute( $user_id )
+{
+    update_user_meta( $user_id,'user_inst', sanitize_text_field( $_POST['user_inst'] ) );
 }
