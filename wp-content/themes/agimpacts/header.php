@@ -8,12 +8,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Agriculture Impacts</title>
-    <meta name="description" content="CCAFS and University of Leeds, with the collaboration of other institutions (CSIRO, Stanford University) are developing a platform to facilitate the investigation of climate change impacts on agriculture. The database that will appear here has been used in the food chapters of the IPCC 4th and 5th assessment reports. The data consists of peer-reviewed literature reports on yield projections from crop simulation studies.">
+    <meta name="description" content="AgImpacts is a living crowdsourcing-based database of climate change impacts projections on agriculture at multiple scales, with the overarching aim of providing information that can be used in global and regional assessments and meta-analyses of food availability and stability under future climate scenarios so as to facilitate the investigation of climate change impacts on agriculture. As such it is an important part of IPCC’s food security chapter. AgImpacts is a collaborative activity between the CGIAR Research Program on Climate Change, Agriculture and Food Security (CCAFS) and University of Leeds, with the collaboration of other institutions (CSIRO, Stanford University, University of Greenwich). The data consists of peer-reviewed literature reports on yield projections from crop simulation studies.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="CCAFS, University of Leeds, IPCC, CGIAR, etc">
+    <meta name="keywords" content="food security, climate change, impacts, adaptation, crops, IPCC, modelling, meta-analysis">
     <meta name="language" content="en-us" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="classification" content="crowdsourcing, science, climate change" />
+    <meta name="classification" content="crowdsourcing, science, climate change, agriculture" />
     <meta name="distribution" content="Global" />
     <meta name="rating" content="General" />
     <!--<meta name="google-site-verification" content="" />-->
