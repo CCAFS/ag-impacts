@@ -48,11 +48,14 @@ if (!empty($roles)) {
   $role = false;
 }
 if (isset($_GET['doi']) && trim($_GET['doi']) != '') {
-  $where .= " AND a.doi_article LIKE '".$_GET['doi']."' ";
+  $where .= " AND a.doi_article LIKE '" . $_GET['doi'] . "' ";
 }
 
 if (isset($_GET['title']) && trim($_GET['title']) != '') {
-  $where .= " AND a.paper_title LIKE '%".$_GET['title']."%' ";
+  $where .= " AND a.paper_title LIKE '%" . $_GET['title'] . "%' ";
+}
+if (isset($_GET['status']) && trim($_GET['status']) != '-1') {
+  $where .= " AND a.status = " . $_GET['status'] . " ";
 }
 $tablename = $wpdb->prefix . 'article';
 $myarticles = $wpdb->get_results("SELECT * FROM $tablename WHERE " . $where);
@@ -135,13 +138,21 @@ if ($last < 1) {
     <fieldset>
       <legend>Filter</legend>
       <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-1-3">
+        <div class="pure-u-1 pure-u-md-1-2">
           <label for="doi">DOI</label>
-          <input id="doi" name="doi" type="text" value="<?php echo $_GET['doi']?>">
+          <input id="doi" name="doi" type="text" value="<?php echo $_GET['doi'] ?>">
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2">
+          <label for="title">Title</label>
+          <input id="title" name="title" type="text" value="<?php echo $_GET['title'] ?>">
         </div>
         <div class="pure-u-1 pure-u-md-1-3">
-          <label for="title">Title</label>
-          <input id="title" name="title" type="text" value="<?php echo $_GET['title']?>">
+          <label for="status">Status</label>
+          <select id="status" name="status" class="pure-input-1-3">
+            <option value="-1" <?php if($_GET['status'] == -1) echo "selected"?>>---</option>
+            <option value="0" <?php if($_GET['status'] == 0) echo "selected"?>>New</option>
+            <option value="1" <?php if($_GET['status'] == 1) echo "selected"?>>Validated</option>            
+          </select>
         </div>
       </div>
       <button type="submit" class="pure-button pure-button-primary">Search</button>

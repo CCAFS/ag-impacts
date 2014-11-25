@@ -295,7 +295,7 @@ function dataTable() {
           . "CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
           . "CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
           . "e.yield_change, CONCAT(e.region,' - ',e.country) as geograph_scope,"
-          . "e.temp_change,e.climate_scenario "
+          . "e.temp_change,e.climate_scenario, a.status "
           . "FROM wp_estimate e "
           . "INNER JOIN wp_article a ON e.article_id=a.id "
           . "WHERE 1 "
@@ -328,7 +328,7 @@ function dataTable() {
 	<tbody>";
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
-      $status = ($result[$i]['doi_article'] == 0)?'new':'Validated';
+      $status = ($result[$i]['status'] == 0)?'new':'Validated';
       $tr = $tr . "<tr>
                     <td>" . $result[$i]['doi_article'] . "</td>
                     <td>" . $result[$i]['spatial_scale'] . "</td>

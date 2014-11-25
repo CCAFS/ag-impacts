@@ -139,10 +139,10 @@ function addEstimate(form) {
   });
 }
 
-function saveAll(){
+function saveAll() {
   var totalforms = $("#estimate_count").val();
-  for(i=1;i<=totalforms;i++) {
-    $("#estimateForm"+i).submit();
+  for (i = 1; i <= totalforms; i++) {
+    $("#estimateForm" + i).submit();
   }
 }
 
@@ -201,6 +201,27 @@ function deleteEstimate(id) {
       }
     });
   }
+}
+
+function validArticle(article) {
+  $.ajax({
+    url: templatePath+'/validArticle.php',
+    type: "POST",
+    data: {article: article},
+    success: function(result) {
+      if (result != '') {
+        var n = noty({
+          layout: 'top',
+          type: 'error',
+          timeout: 6000,
+          text: result
+        });
+//        console.log(result);
+      } else {
+        location.reload();
+      }
+    }
+          });
 }
 
 function clearForm() {

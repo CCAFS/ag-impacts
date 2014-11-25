@@ -40,6 +40,10 @@ if (isset($_GET['title']) && trim($_GET['title']) != '') {
   $where .= " AND a.paper_title LIKE '%".$_GET['title']."%' ";
 }
 
+if (isset($_GET['status']) && trim($_GET['status']) != '-1') {
+  $where .= " AND a.status = " . $_GET['status'] . " ";
+}
+
 if (isset($_POST['pn'])) {
   $rpp = preg_replace('#[^0-9]#', '', $_POST['rpp']);
   $last = preg_replace('#[^0-9]#', '', $_POST['last']);
@@ -69,8 +73,11 @@ foreach ($myarticles as $article):
     <td><?php echo $article->author ?></td>
     <td><?php echo ($article->count)?$article->count:0 ?></td>
     <td>
-      <button type="button" class="pure-button" onclick="$(location).attr('href', templateUrl + '/articleDetail?article=<?php echo $article->id ?>');">Edit</button>
-      <button type="button" class="pure-button" onclick="$(location).attr('href', templateUrl + '/estimate?article=<?php echo $article->id ?>');">Add estimate</button>
+      <button type="button" style="margin-bottom: 10px;" class="pure-button edit-btn" onclick="$(location).attr('href', templateUrl + '/articleDetail?article=<?php echo $article->id ?>');"><i class="fa fa-pencil-square"></i> Edit</button>
+      <button type="button" style="margin-bottom: 10px;" class="pure-button" onclick="$(location).attr('href', templateUrl + '/estimate?article=<?php echo $article->id ?>');"><i class="fa fa-plus-square"></i> Add estimate</button>
+      <?php if ($article->status == 0):?>
+        <button type="button" style="margin-bottom: 10px;" class="pure-button" onclick="validArticle(<?php echo $article->id ?>)"><i class="fa fa-check-square"></i> Valid article</button>
+      <?php endif;?>
     </td>            
   </tr>
 <?php endforeach; ?>

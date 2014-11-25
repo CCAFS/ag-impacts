@@ -210,6 +210,7 @@ function createDataArticleArray($line) {
   $article['page_end'] = $line[7];
   $article['reference'] = $line[0];
   $article['paper_title'] = $line[2];
+  $article['status'] = '1';
   return $article;
 }
 
