@@ -34,22 +34,15 @@ get_header();
         </div>
 
         <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-          <label for="baseline_start">Baseline Period Start</label>
-          <input type="hidden" name="baseline_start" id="baseline_start" class="input-xlarge" style="width:80px;" data-placeholder="Choose An Option.." />
+          <label for="baseline">Baseline Period</label>
+          <input type="hidden" name="baseline" id="baseline" class="input-xlarge" style="width:200px;" data-placeholder="Choose An Option.." />
         </div>
+        
         <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-          <label for="baseline_end">Baseline Period End</label>
-          <input type="hidden" name="baseline_end" id="baseline_end" class="input-xlarge" style="width:80px;" data-placeholder="Choose An Option.." />
+          <label for="period">Projection Period</label>
+          <input type="hidden" name="period" id="period" class="input-xlarge" style="width:200px;" data-placeholder="Choose An Option.." />
         </div>
-
-        <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-          <label for="period_start">Projection Period Start</label>
-          <input type="hidden" name="period_start" id="period_start" class="input-xlarge" style="width:80px;" data-placeholder="Choose An Option.." />
-        </div>
-        <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-          <label for="period_end">Projection Period End</label>
-          <input type="hidden" name="period_end" id="period_end" class="input-xlarge" style="width:80px;" data-placeholder="Choose An Option.." />
-        </div>
+        
         <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
           <label for="scale">Spatial Scale</label>
           <input type="hidden" name="scale" id="scale"  data-placeholder="Choose An Option.." />
