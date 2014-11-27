@@ -125,7 +125,7 @@ function baselineQuery() {
   $where = "  ";
   
   if($baseline != ""){
-      $where = $where." e.base_line_start LIKE '%".$baseline."%' OR e.base_line_end LIKE '%".$baseline."%' ";
+      $where = $where." AND e.base_line_start LIKE '%".$baseline."%' OR e.base_line_end LIKE '%".$baseline."%' ";
   }
   if ($crop != "") {
     $where = $where . " AND e.crop = '" . $crop . "' ";
@@ -166,7 +166,7 @@ function periodQuery() {
   $where = "  ";
   
   if($period !=""){
-    $where = $where." e.projection_start LIKE '%".$period."%' OR e.projection_end LIKE '%".$period."%' ";
+    $where = $where." AND e.projection_start LIKE '%".$period."%' OR e.projection_end LIKE '%".$period."%' ";
   }
   if ($crop != "") {
     $where = $where . " AND e.crop = '" . $crop . "' ";
