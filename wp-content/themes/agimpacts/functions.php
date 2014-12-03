@@ -102,3 +102,25 @@ function save_institute( $user_id )
 {
     update_user_meta( $user_id,'user_inst', sanitize_text_field( $_POST['user_inst'] ) );
 }
+
+add_action('show_user_profile', 'reward_sys');
+add_action('edit_user_profile', 'reward_sys');
+
+function reward_sys($user) {
+  ?>
+  <h3>Rewards</h3>
+
+  <table class="form-table">
+    <tr>
+      <th><label for="gold">Gold</label></th>
+      <th><label for="silver">Silver</label></th>
+      <th><label for="bronze">Bronze</label></th>
+    </tr>
+    <tr>
+      <td><label for="gold"><?php echo (get_the_author_meta('gold', $user->ID))?esc_attr(get_the_author_meta('gold', $user->ID)):0; ?></label></td>
+      <td><label for="silver"><?php echo (get_the_author_meta('silver', $user->ID))?esc_attr(get_the_author_meta('silver', $user->ID)):0; ?></label></td>
+      <td><label for="bronze"><?php echo (get_the_author_meta('bronze', $user->ID))?esc_attr(get_the_author_meta('bronze', $user->ID)):0; ?></label></td>
+    </tr>
+  </table>
+  <?php
+}
