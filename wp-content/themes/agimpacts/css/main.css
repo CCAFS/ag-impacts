@@ -62,8 +62,8 @@ h2, h3{
 }
 
 footer{
-  background: #f1f1f1;
-  height: 180px;
+  background: #E0E0E0; 
+  border-top: 3px solid #EEE;
 }
 
 
@@ -246,3 +246,106 @@ button#btn-login {
     background-size: 30px 30px;
     background-repeat: no-repeat;
 }*/
+
+
+/***************  Footer  **************/
+
+
+#footer-content{
+    padding: 1em 0 2em 0;
+
+}
+
+#footer-content h3{
+    margin: 0;
+    color: #444;
+}
+
+.contact-info {
+  float: left;
+  width: 35%;
+  margin-right: 1em;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  background: rgba(255,255,255,0.3);
+  height: 167px;
+  border-radius: 3px;
+}
+
+.contact-info.first-child {
+  border-right: 1px solid #D9D9D9;
+}
+
+.contact-info p {
+  font-size: 0.8em;
+  margin: 0.4em;
+  color: #595959;
+}
+
+.contact-info .name{
+  color: #505050;
+  background: url(../img/contact-name.png) no-repeat 0;
+  background-size: 40px;
+  height: 24px;
+  padding: 9px 0 0 48px;
+  font-weight: bold;
+}
+.contact-info .organization{ 
+  padding: 0px 0 0px 0px;
+  font-size: 0.7em;
+}
+
+.contact-info .email{
+  color: #353535;
+  background: url(../img/email.png) no-repeat 0;
+  background-size: 20px;
+  height: 18px;
+  padding: 3px 0 0 30px; 
+}
+
+#partners{
+    background: #F2F2F2;
+  
+    border-top: 4px solid #EEE;
+}
+ 
+#partners-logos {
+  width: 1200px;
+}
+
+#partners-logos li{
+    float: left;
+    list-style: none;
+    padding-right: 4px;
+    height: 93px;
+    border-right: 1px solid #E7E7E7;
+}
+#partners-logos li img{
+  height: 100%;
+}
+
+
+#partners-logos li:last-child{ 
+    border-right: 0;
+}
+
+
+#networks {
+    float: right;
+    color: #363636;
+    font-weight: lighter;
+    font-size: 1.1em;
+    padding: 1em 2em;
+}
+
+#networks li{
+    list-style: none;
+    height: 36px;
+    margin-bottom: 1em;
+}
+
+#networks li img{
+    height: 100%;
+    vertical-align: middle;
+    margin-right: 8px;
+}
