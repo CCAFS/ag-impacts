@@ -99,6 +99,8 @@ if ($_GET['article']) {
           $('.btnha').show()">Show all</button>
       <button type="button" class="pure-button pure-button-primary" onclick="$(location).attr('href',templateUrl+'/article');">Back</button>
     </div>
+    <br>
+      <br>
   </div>
 </section>
 <!--<script>

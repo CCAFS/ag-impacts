@@ -48,11 +48,11 @@ if (!empty($roles)) {
   $role = false;
 }
 if (isset($_GET['doi']) && trim($_GET['doi']) != '') {
-  $where .= " AND a.doi_article LIKE '".$_GET['doi']."' ";
+  $where .= " AND a.doi_article LIKE '" . $_GET['doi'] . "' ";
 }
 
 if (isset($_GET['title']) && trim($_GET['title']) != '') {
-  $where .= " AND a.paper_title LIKE '%".$_GET['title']."%' ";
+  $where .= " AND a.paper_title LIKE '%" . $_GET['title'] . "%' ";
 }
 $tablename = $wpdb->prefix . 'article';
 $myarticles = $wpdb->get_results("SELECT * FROM $tablename WHERE " . $where);
@@ -137,11 +137,11 @@ if ($last < 1) {
       <div class="pure-g">
         <div class="pure-u-1 pure-u-md-1-3">
           <label for="doi">DOI</label>
-          <input id="doi" name="doi" type="text" value="<?php echo $_GET['doi']?>">
+          <input id="doi" name="doi" type="text" value="<?php echo $_GET['doi'] ?>">
         </div>
         <div class="pure-u-1 pure-u-md-1-3">
           <label for="title">Title</label>
-          <input id="title" name="title" type="text" value="<?php echo $_GET['title']?>">
+          <input id="title" name="title" type="text" value="<?php echo $_GET['title'] ?>">
         </div>
       </div>
       <button type="submit" class="pure-button pure-button-primary">Search</button>
@@ -154,6 +154,8 @@ if ($last < 1) {
     <div style="position: absolute; right: 5px">
       <button class="pure-button pure-button-primary" onclick="$(location).attr('href', templateUrl + '/articleDetail');">Add Article</button> 
     </div>
+    <br>
+    <br>
   </div>
   <div data-role="main" class="ui-content">
     <?php if ($total_rows > 0) : ?>
@@ -177,7 +179,11 @@ if ($last < 1) {
       <h3> <a href="javascript:$(location).attr('href', templateUrl + '/articleDetail');">You have not articles, add one +</a></h3>
     <?php endif; ?>
   </div>
+  <br>
   <div id="pagination_controls" style="float:right; display:none"></div>
+  <br>
+  <br>
 </section>
 <script> request_page(<?php echo $page ?>, $('#filtersh').serialize());</script>
+<?php get_footer(); ?>
 
