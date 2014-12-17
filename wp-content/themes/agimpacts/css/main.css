@@ -52,6 +52,14 @@ p {
   line-height: 1.3em;
 }
 
+ul#agref  {
+  text-align: justify;
+  color: #6A6A6A;
+  font-size: 15px;
+  font-family: sans-serif;
+  line-height: 1.3em;
+}
+
 a{
   color: #444444;
   text-decoration: none;
