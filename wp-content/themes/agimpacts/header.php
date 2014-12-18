@@ -21,7 +21,7 @@
     <!--<meta name="revisit-after" content="21 days" />-->
     <meta name="creator" content="Name,Designer,Email Address,or Company" />
     <meta name="publisher" content="CCAFS, CIAT" />
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/img/favicon.ico" />
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
     <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->

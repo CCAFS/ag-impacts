@@ -13,6 +13,7 @@ get_header();
 <script src="<?php echo get_template_directory_uri(); ?>/js/select2/select2.min.js"></script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/agimpact_filter.js"></script>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/agimpact_filter.css">
+<div id="loading"><img style="" src="<?php echo get_template_directory_uri(); ?>/img/loading.gif" alt="Loader" /></div>
 <section id="content" class="row"> 
 
   <form action="action" method="POST" class="pure-form pure-form-aligned">
@@ -31,20 +32,18 @@ get_header();
           <label for="scale">Spatial Scale</label>
           <input type="hidden" name="scale" id="scale"  data-placeholder="Choose An Option.." />
         </div>
-        <!--<div id="location">-->
-          <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-            <label for="subcontinents">Continent</label>
-            <input type="hidden" name="subcontinents" id="subcontinents" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />
-          </div>
-<!--          <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-            <label for="region">Region</label>
-            <input type="hidden" name="region" id="region" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />
-          </div>-->
-          <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-            <label for="country">Country</label>
-            <input type="hidden" name="country" id="country" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />
-          </div>
-        <!--</div>-->
+        <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
+          <label for="subcontinents">Continent</label>
+          <input type="hidden" name="subcontinents" id="subcontinents" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />
+        </div>
+<!--        <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
+          <label for="region">Region</label>
+          <input type="hidden" name="region" id="region" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />
+        </div>-->
+        <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
+          <label for="country">Country</label>
+          <input type="hidden" name="country" id="country" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />
+        </div>
     </fieldset>
     <fieldset>
       <legend>Climate Scenario</legend>
