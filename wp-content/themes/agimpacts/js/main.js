@@ -162,7 +162,7 @@ function saveOne(form, article) {
         });
 //        console.log(result);
       } else {
-//        location.reload();
+        location.reload();
       }
     },
     complete: function() {

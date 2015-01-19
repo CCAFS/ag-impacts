@@ -34,7 +34,7 @@ if (!isset($myestimates) || is_null($myestimates)) {
   <input type='hidden' id='estimate_id' value='<?php echo $estimate['ID'] ?>'>
   <?php
 }
-//print_r($current_estimate);
+//echo "<pre>$articleId".print_r($current_estimate,true)."</pre>";
 ?>
 <div id="contentEstimate<?php echo $id; ?>">
   <div float="right" style="position: absolute; right: 5px">
@@ -160,7 +160,7 @@ if (!isset($myestimates) || is_null($myestimates)) {
 //      alert(form.serialize());
 //    var notes_id = form.find('input[name=crop]').val();
 //    var notes_text = form.find('textarea[id=comment]').val();
-      saveOne(form.serialize(),<?php echo $current_estimate['article_id'] ?>);
+      saveOne(form.serialize(),<?php echo $articleId ?>);
       e.preventDefault();
     });
   </script>

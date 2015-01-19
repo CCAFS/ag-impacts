@@ -1,7 +1,0 @@
-hacer mas visible el buscador de amkn
-Cuando se haga una busqueda dependiendo de la seccion el buscador debe quedar en la pestana correspondiente
-contactar las personas encargadasa de los sites en los casos que un site no tenga photos o videos cercanos para que nos puedan brindar informacion.
-Es importante solo poner las fotos y videos correspondientes a los sites solamente si definitavamente no hay poner las de los sitios cercanos
-se puede crear un tipo de campana pequena para que todos los sites brinden informacacion a AMKN, actualizando los posts de imagenes y videos. Estos no deben ser necesariamente de los canales corporativos.
-
-para empezar voy a poner los layers dispoibles en amkn en un documento para una mejor visualizacion y asi empezar a clasificarlos.

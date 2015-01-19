@@ -6,70 +6,79 @@ $(document).ready(function() {
       data: function(term, page) {
         return {doi: term, option: 1};
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#crop').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          crop: term,
+          crop: params.term,
           option: 3
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#model').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          model: term,
+          model: params.term,
           option: 4,
           crop: $('#crop').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
-      }
+      },
+      cache: true
     }
   });
 
   $('#climate').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          climate: term,
+          climate: params.term,
           option: 9,
           crop: $('#crop').val(),
           model: $('#model').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#baseline').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          baseline: term,
+          baseline: params.term,
           option: 5,
           suboption: 1,
           crop: $('#crop').val(),
@@ -77,19 +86,21 @@ $(document).ready(function() {
           climate: $('#climate').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#period').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          period: term,
+          period: params.term,
           option: 6,
           suboption: 1,
           crop: $('#crop').val(),
@@ -98,19 +109,21 @@ $(document).ready(function() {
           baseline: $('#baseline').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#scale').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          scale: term,
+          scale: params.term,
           option: 2,
           crop: $('#crop').val(),
           model: $('#model').val(),
@@ -119,19 +132,21 @@ $(document).ready(function() {
           period: $('#period').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
-  $('#subcontinents').select2({
+  $('#continents').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          subcontinents: term,
+          continents: params.term,
           option: 8,
           crop: $('#crop').val(),
           model: $('#model').val(),
@@ -141,42 +156,72 @@ $(document).ready(function() {
           scale: $('#scale').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
+        return {results: data};
+      }
+    }
+  });
+
+  $('#regions').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
+    ajax: {
+      url: templatePath + "/options.php",
+      dataType: 'json',
+      data: function(params) {
+        return {
+          region: params.term,
+          option: 12,
+          continent: $('#continents').val(),
+          crop: $('#crop').val(),
+          model: $('#model').val(),
+          climate: $('#climate').val(),
+          baseline: $('#baseline').val(),
+          period: $('#period').val(),
+          scale: $('#scale').val()
+        };
+      },
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#country').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          country: term,
+          country: params.term,
           option: 7,
+          region: $('#regions').val(),
+          continent: $('#continents').val(),
           crop: $('#crop').val(),
           model: $('#model').val(),
           climate: $('#climate').val(),
           baseline: $('#baseline').val(),
           period: $('#period').val(),
           scale: $('#scale').val(),
-          country:$('#country').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
   });
 
   $('#adaptation').select2({
+    placeholder: "Choose an option...",
+    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
-      data: function(term, page) {
+      data: function(params) {
         return {
-          adaptation: term,
+          adaptation: params.term,
           option: 10,
           crop: $('#crop').val(),
           model: $('#model').val(),
@@ -188,7 +233,7 @@ $(document).ready(function() {
           country: $('#country').val()
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         return {results: data};
       }
     }
@@ -199,17 +244,19 @@ $(document).ready(function() {
     $.ajax({
       url: templatePath + "/options.php",
       type: "POST",
-      data: "submit=&scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#subcontinents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val() + "&option=" + 11,
+      data: "submit=&scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val() + "&option=" + 11,
       success: function(datos) {
         $('#results').append(datos);
         $("#resulttable").tablesorter({theme: 'green'});
       },
       complete: function() {
         $("#loading").fadeOut('slow');
-//      $("#result").show();
       }
     });
     $('#results').show();
+  });
+  $("#reset").on("click", function() {
+    $('.js-data-ajax').val(null).trigger("change");
   });
   /*$("#downloaddata").click(function(){
    alert("funciona");

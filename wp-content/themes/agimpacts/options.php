@@ -1,4 +1,5 @@
 <?php
+
 require('../../../wp-load.php');
 
 $option = $_REQUEST['option'];
@@ -18,7 +19,7 @@ switch ($option) {
     break;
   case 7 : countryQuery();
     break;
-  case 8 : subcontinentsQuery();
+  case 8 : continentsQuery();
     break;
   case 9 : climateQuery();
     break;
@@ -26,18 +27,20 @@ switch ($option) {
     break;
   case 11 : dataTable();
     break;
+  case 12 : regionQuery();
+    break;
   default:
     break;
 }
 
 function doiQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $doi = $_REQUEST['doi'];
   $result = $wpdb->get_results("SELECT id,doi_article FROM wp_article WHERE doi_article LIKE '%$doi%' ORDER BY id ASC ", ARRAY_A);
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
-     $answer[]= array("id" => $result[$i]['id'], "text" => $result[$i]['doi_article']);
+      $answer[] = array("id" => $result[$i]['id'], "text" => $result[$i]['doi_article']);
     }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");
@@ -47,18 +50,18 @@ function doiQuery() {
 
 function cropQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $crop = $_REQUEST['crop'];
   $result = $wpdb->get_results("SELECT DISTINCT(e.crop) "
           . " FROM wp_estimate e "
           . " INNER JOIN wp_article a ON e.article_id=a.id "
           . " WHERE "
-          . " e.crop LIKE '%".$crop."%' "
+          . " e.crop LIKE '%" . $crop . "%' "
           . "ORDER BY e.crop ASC ", ARRAY_A);
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
       $answer[] = array("id" => $result[$i]['crop'], "text" => $result[$i]['crop']);
-     }
+    }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");
   }
@@ -67,16 +70,18 @@ function cropQuery() {
 
 function modelQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
-  $where="";
-  if($crop != ''){ $where = $where." AND e.crop = '".$crop."'";}
+  $where = "";
+  if ($crop != '') {
+    $where = $where . " AND e.crop = '" . $crop . "'";
+  }
   $result = $wpdb->get_results("SELECT DISTINCT(e.impact_models) "
           . " FROM wp_estimate e "
           . " INNER JOIN wp_article a ON e.article_id=a.id "
           . " WHERE "
-          . " e.impact_models LIKE '%".$model."%' "
+          . " e.impact_models LIKE '%" . $model . "%' "
           . $where
           . " ORDER BY e.impact_models ASC", ARRAY_A);
   if (count($result) != 0) {
@@ -91,18 +96,22 @@ function modelQuery() {
 
 function climateQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
-  $where="";
-  if($crop != ''){ $where = $where." AND e.crop = '".$crop."' ";}
-  if($model != ''){ $where = $where." AND e.impact_models = '".$crop."' ";}
+  $where = "";
+  if ($crop != '') {
+    $where = $where . " AND e.crop = '" . $crop . "' ";
+  }
+  if ($model != '') {
+    $where = $where . " AND e.impact_models = '" . $crop . "' ";
+  }
   $result = $wpdb->get_results("SELECT DISTINCT(e.climate_scenario) "
           . " FROM wp_estimate e "
           . " INNER JOIN wp_article a ON e.article_id=a.id "
           . " WHERE "
-          . " e.climate_scenario LIKE '%".$climate."%' "
+          . " e.climate_scenario LIKE '%" . $climate . "%' "
           . $where
           . " ORDER BY e.climate_scenario ASC ", ARRAY_A);
   if (count($result) != 0) {
@@ -117,15 +126,15 @@ function climateQuery() {
 
 function baselineQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
   $baseline = $_REQUEST['baseline'];
   $where = "  ";
-  
-  if($baseline != ""){
-      $where = $where." AND e.base_line_start LIKE '%".$baseline."%' OR e.base_line_end LIKE '%".$baseline."%' ";
+
+  if ($baseline != "") {
+    $where = $where . " AND e.base_line_start LIKE '%" . $baseline . "%' OR e.base_line_end LIKE '%" . $baseline . "%' ";
   }
   if ($crop != "") {
     $where = $where . " AND e.crop = '" . $crop . "' ";
@@ -147,7 +156,7 @@ function baselineQuery() {
 
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
-      $answer[] = array("id" => $result[$i]['base_line_start']." - ".$result[$i]['base_line_end'], "text" => $result[$i]['base_line_start']." - ".$result[$i]['base_line_end']);
+      $answer[] = array("id" => $result[$i]['base_line_start'] . " - " . $result[$i]['base_line_end'], "text" => $result[$i]['base_line_start'] . " - " . $result[$i]['base_line_end']);
     }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");
@@ -157,16 +166,16 @@ function baselineQuery() {
 
 function periodQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $period = $_REQUEST['period'];
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
   $baseline = $_REQUEST['baseline'];
   $where = "  ";
-  
-  if($period !=""){
-    $where = $where." AND e.projection_start LIKE '%".$period."%' OR e.projection_end LIKE '%".$period."%' ";
+
+  if ($period != "") {
+    $where = $where . " AND e.projection_start LIKE '%" . $period . "%' OR e.projection_end LIKE '%" . $period . "%' ";
   }
   if ($crop != "") {
     $where = $where . " AND e.crop = '" . $crop . "' ";
@@ -179,7 +188,7 @@ function periodQuery() {
   }
   if ($baseline != "") {
     $baselinearray[] = explode(" - ", $baseline);
-    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
+    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
   }
 
   $result = $wpdb->get_results("SELECT DISTINCT e.projection_start, e.projection_end  "
@@ -193,7 +202,7 @@ function periodQuery() {
 
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
-      $answer[] = array("id" => $result[$i]['projection_start']." - ".$result[$i]['projection_end'], "text" => $result[$i]['projection_start']." - ".$result[$i]['projection_end']);
+      $answer[] = array("id" => $result[$i]['projection_start'] . " - " . $result[$i]['projection_end'], "text" => $result[$i]['projection_start'] . " - " . $result[$i]['projection_end']);
     }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");
@@ -203,7 +212,7 @@ function periodQuery() {
 
 function scaleQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
@@ -222,11 +231,11 @@ function scaleQuery() {
   }
   if ($baseline != "") {
     $baselinearray[] = explode(" - ", $baseline);
-    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
+    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
   }
   if ($period != "") {
     $periodarray[] = explode(" - ", $period);
-    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
+    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
   }
   $result = $wpdb->get_results("SELECT DISTINCT(e.spatial_scale) "
           . "FROM wp_estimate e "
@@ -244,10 +253,10 @@ function scaleQuery() {
   echo json_encode($answer);
 }
 
-function subcontinentsQuery() {
+function continentsQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
-  $subcontinents = $_REQUEST['subcontinents'];
+  $answer[0] = array("id" => "", "text" => "");
+  $continent = $_REQUEST['continents'];
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
@@ -267,26 +276,93 @@ function subcontinentsQuery() {
   }
   if ($baseline != "") {
     $baselinearray[] = explode(" - ", $baseline);
-    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
+    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
   }
   if ($period != "") {
     $periodarray[] = explode(" - ", $period);
-    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
+    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
   }
   if ($scale != "") {
     $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
   }
 
-  $result = $wpdb->get_results("SELECT DISTINCT(e.region) "
-          . "FROM wp_estimate e "
-          . "INNER JOIN wp_article a ON e.article_id=a.id "
-          . "WHERE e.region LIKE'%".$subcontinents."%' "
-          . $where
-          . "ORDER BY e.region ASC ", ARRAY_A);
+//  $result = $wpdb->get_results("SELECT DISTINCT(e.region) "
+//          . "FROM wp_estimate e "
+//          . "INNER JOIN wp_article a ON e.article_id=a.id "
+//          . "WHERE e.region LIKE'%".$subcontinents."%' "
+//          . $where
+//          . "ORDER BY e.region ASC ", ARRAY_A);
+
+  $result = $wpdb->get_results("SELECT e.name "
+          . "FROM wp_continent e "
+//          . "INNER JOIN wp_article a ON e.article_id=a.id "
+          . "WHERE e.name LIKE'%" . $continent . "%' "
+//          . $where
+          . "ORDER BY e.name ASC ", ARRAY_A);
 
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
-      $answer[] = array("id" => $result[$i]['region'], "text" => $result[$i]['region']);
+      $answer[] = array("id" => $result[$i]['name'], "text" => $result[$i]['name']);
+    }
+  } else {
+    $answer[] = array("id" => "0", "text" => "No Results Found..");
+  }
+  echo json_encode($answer);
+}
+
+function regionQuery() {
+  global $wpdb;
+  $answer[0] = array("id" => "", "text" => "");
+  $region = $_REQUEST['region'];
+  $continent = $_REQUEST['continent'];
+  $crop = $_REQUEST['crop'];
+  $model = $_REQUEST['model'];
+  $climate = $_REQUEST['climate'];
+  $baseline = $_REQUEST['baseline'];
+  $period = $_REQUEST['period'];
+  $scale = $_REQUEST['scale'];
+  $where = "  ";
+
+  if ($continent != "") {
+    $where = $where . " AND a.name = '" . $continent . "' ";
+  }
+//  if ($crop != "") {
+//    $where = $where . " AND e.crop = '" . $crop . "' ";
+//  }
+//  if ($model != "") {
+//    $where = $where . " AND e.impact_models = '" . $model . "' ";
+//  }
+//  if ($climate != "") {
+//    $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
+//  }
+//  if ($baseline != "") {
+//    $baselinearray[] = explode(" - ", $baseline);
+//    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
+//  }
+//  if ($period != "") {
+//    $periodarray[] = explode(" - ", $period);
+//    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
+//  }
+//  if ($scale != "") {
+//    $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
+//  }
+//  $result = $wpdb->get_results("SELECT DISTINCT(e.region) "
+//          . "FROM wp_estimate e "
+//          . "INNER JOIN wp_article a ON e.article_id=a.id "
+//          . "WHERE e.region LIKE'%".$subcontinents."%' "
+//          . $where
+//          . "ORDER BY e.region ASC ", ARRAY_A);
+
+  $result = $wpdb->get_results("SELECT e.name "
+          . "FROM wp_region e "
+          . "INNER JOIN wp_continent a ON e.continent_id=a.id "
+          . "WHERE e.name LIKE'%" . $region . "%' "
+          . $where
+          . "ORDER BY e.name ASC ", ARRAY_A);
+
+  if (count($result) != 0) {
+    for ($i = 0; $i < count($result); $i++) {
+      $answer[] = array("id" => $result[$i]['name'], "text" => $result[$i]['name']);
     }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");
@@ -296,14 +372,78 @@ function subcontinentsQuery() {
 
 function countryQuery() {
   global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
+  $answer[0] = array("id" => "", "text" => "");
   $country = $_REQUEST['country'];
+  $region = $_REQUEST['region'];
+  $continent = $_REQUEST['continent'];
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
   $baseline = $_REQUEST['baseline'];
   $period = $_REQUEST['period'];
   $scale = $_REQUEST['scale'];
+  $subcontinents = $_REQUEST['subcontinents'];
+  $where = "  ";
+
+  if ($continent != "") {
+    $where = $where . " AND a.name = '" . $continent . "' ";
+  }
+  if ($region != "") {
+    $where = $where . " AND e.name = '" . $region . "' ";
+  }
+//  if ($crop != "") {
+//    $where = $where . " AND e.crop = '" . $crop . "' ";
+//  }
+//  if ($model != "") {
+//    $where = $where . " AND e.impact_models = '" . $model . "' ";
+//  }
+//  if ($climate != "") {
+//    $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
+//  }
+//  if ($baseline != "") {
+//    $baselinearray[] = explode(" - ", $baseline);
+//    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
+//  }
+//  if ($period != "") {
+//    $periodarray[] = explode(" - ", $period);
+//    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
+//  }
+//  if ($scale != "") {
+//    $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
+//  }
+//  if ($subcontinents != "") {
+//    $where = $where . " AND e.region = '" . $subcontinents . "' ";
+//  }
+
+  $result = $wpdb->get_results("SELECT c.name "
+          . "FROM wp_country c "
+          . "INNER JOIN wp_region e ON c.region_id=e.id "
+          . "INNER JOIN wp_continent a ON e.continent_id=a.id "
+          . "WHERE c.name LIKE'%" . $country . "%' "
+          . $where
+          . "ORDER BY c.name ASC ", ARRAY_A);
+
+  if (count($result) != 0) {
+    for ($i = 0; $i < count($result); $i++) {
+      $answer[] = array("id" => $result[$i]['name'], "text" => $result[$i]['name']);
+    }
+  } else {
+    $answer[] = array("id" => "0", "text" => "No Results Found..");
+  }
+  echo json_encode($answer);
+}
+
+function adaptationQuery() {
+  global $wpdb;
+  $answer[0] = array("id" => "", "text" => "");
+  $adaptation = $_REQUEST['adaptation'];
+  $crop = $_REQUEST['crop'];
+  $model = $_REQUEST['model'];
+  $climate = $_REQUEST['climate'];
+  $baseline = $_REQUEST['baseline'];
+  $period = $_REQUEST['period'];
+  $scale = $_REQUEST['scale'];
+  $country = $_REQUEST['country'];
   $subcontinents = $_REQUEST['subcontinents'];
   $where = "  ";
 
@@ -318,66 +458,11 @@ function countryQuery() {
   }
   if ($baseline != "") {
     $baselinearray[] = explode(" - ", $baseline);
-    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
+    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
   }
   if ($period != "") {
     $periodarray[] = explode(" - ", $period);
-    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
-  }
-  if ($scale != "") {
-    $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
-  }
-  if ($subcontinents != "") {
-    $where = $where . " AND e.region = '" . $subcontinents . "' ";
-  }
-
-  $result = $wpdb->get_results("SELECT DISTINCT(e.country) "
-          . "FROM wp_estimate e "
-          . "INNER JOIN wp_article a ON e.article_id=a.id "
-          . "WHERE e.country LIKE '%".$country."%' "
-          . $where
-          . "ORDER BY e.country ASC ", ARRAY_A);
-
-  if (count($result) != 0) {
-    for ($i = 0; $i < count($result); $i++) {
-      $answer[] = array("id" => $result[$i]['country'], "text" => $result[$i]['country']);
-    }
-  } else {
-    $answer[] = array("id" => "0", "text" => "No Results Found..");
-  }
-    echo json_encode($answer);
-}
-
-function adaptationQuery() {
-  global $wpdb;
-  $answer[0]= array("id"=>"","text"=>"");
-  $adaptation =$_REQUEST['adaptation'];
-  $crop = $_REQUEST['crop'];
-  $model = $_REQUEST['model'];
-  $climate = $_REQUEST['climate'];
-  $baseline = $_REQUEST['baseline'];
-  $period = $_REQUEST['period'];
-  $scale = $_REQUEST['scale'];
-  $country = $_REQUEST['country'];
-  $subcontinents = $_REQUEST['subcontinents'];  
-  $where = "  ";
-
-  if ($crop != "") {
-    $where = $where . " AND e.crop = '" . $crop . "' ";
-  }
-  if ($model != "") {
-    $where = $where . " AND e.impact_models = '" . $model . "' ";
-  }
-  if ($climate != "") {
-    $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
-  }
-  if ($baseline != "") {
-    $baselinearray[] = explode(" - ", $baseline);
-    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
-  }
-  if ($period != "") {
-    $periodarray[] = explode(" - ", $period);
-    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
+    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
   }
   if ($scale != "") {
     $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
@@ -391,10 +476,10 @@ function adaptationQuery() {
   $result = $wpdb->get_results("SELECT DISTINCT(e.adaptation) "
           . "FROM wp_estimate e "
           . "INNER JOIN wp_article a ON e.article_id=a.id "
-          . "WHERE e.adaptation LIKE '%".$adaptation."%' "
+          . "WHERE e.adaptation LIKE '%" . $adaptation . "%' "
           . $where
           . "ORDER BY e.adaptation ASC ", ARRAY_A);
-  
+
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
       $answer[] = array("id" => $result[$i]['adaptation'], "text" => $result[$i]['adaptation']);
@@ -407,8 +492,8 @@ function adaptationQuery() {
 
 function dataTable() {
   global $wpdb;
-  
-  
+
+
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
   $climate = $_REQUEST['climate'];
@@ -416,37 +501,37 @@ function dataTable() {
   $period = $_REQUEST['period'];
   $scale = $_REQUEST['scale'];
   $country = $_REQUEST['country'];
-  $subcontinents = $_REQUEST['subcontinents'];  
+  $subcontinents = $_REQUEST['subcontinents'];
   $adaptation = $_REQUEST['adaptation'];
   $where = "  ";
 
-  if ($crop != "") {
+  if ($crop != "null") {
     $where = $where . " AND e.crop = '" . $crop . "' ";
   }
-  if ($model != "") {
+  if ($model != "null") {
     $where = $where . " AND e.impact_models = '" . $model . "' ";
   }
-  if ($climate != "") {
+  if ($climate != "null") {
     $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
   }
-  if ($baseline != "") {
+  if ($baseline != "null") {
     $baselinearray[] = explode(" - ", $baseline);
-    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
+    $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
   }
-  if ($period != "") {
+  if ($period != "null") {
     $periodarray[] = explode(" - ", $period);
-    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
+    $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
   }
-  if ($scale != "") {
+  if ($scale != "null") {
     $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
   }
-  if ($subcontinents != "") {
+  if ($subcontinents != "null") {
     $where = $where . " AND e.region = '" . $subcontinents . "' ";
   }
-  if ($country != "") {
+  if ($country != "null") {
     $where = $where . " AND e.country = '" . $country . "' ";
   }
-  if ($adaptation != "") {
+  if ($adaptation != "null") {
     $where = $where . " AND e.adaptation = '" . $adaptation . "' ";
   }
 
@@ -465,8 +550,8 @@ function dataTable() {
   $table = "<p>
 	<div id='downloadFile'>
 		<h3>Download Data</h3>
-		<a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='".get_template_directory_uri()."/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='".get_template_directory_uri()."/img/csv.png'></a>
+		<a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='" . get_template_directory_uri() . "/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='" . get_template_directory_uri() . "/img/csv.png'></a>
 	</div>
 
 	<table id='resulttable' class='tablesorter'>
@@ -488,7 +573,7 @@ function dataTable() {
 	<tbody>";
   if (count($result) != 0) {
     for ($i = 0; $i < count($result); $i++) {
-      $status = ($result[$i]['doi_article'] == 0)?'new':'Validated';
+      $status = ($result[$i]['doi_article'] == 0) ? 'new' : 'Validated';
       $tr = $tr . "<tr>
                     <td>" . $result[$i]['doi_article'] . "</td>
                     <td>" . $result[$i]['spatial_scale'] . "</td>
@@ -500,7 +585,7 @@ function dataTable() {
                     <td>" . $result[$i]['geograph_scope'] . "</td>
                     <td>" . $result[$i]['temp_change'] . "</td>
                     <td>" . $result[$i]['climate_scenario'] . "</td>
-                    <td>".$status."</td>
+                    <td>" . $status . "</td>
             </tr>";
     }
     echo $table . $tr . "</tbody>
