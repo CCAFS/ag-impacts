@@ -21,33 +21,33 @@
     $adaptation = $_REQUEST['adaptation'];
     $where = "  ";
 
-    if ($crop != "") {
+    if ($crop != "null") {
       $where = $where . " AND e.crop = '" . $crop . "' ";
     }
-    if ($model != "") {
+    if ($model != "null") {
       $where = $where . " AND e.impact_models = '" . $model . "' ";
     }
-    if ($climate != "") {
+    if ($climate != "null") {
       $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
     }
-    if ($baseline != "") {
+    if ($baseline != "null") {
       $baselinearray[] = explode(" - ", $baseline);
       $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '".$baselinearray[0][1]."' ";
     }
-    if ($period != "") {
+    if ($period != "null") {
       $periodarray[] = explode(" - ", $period);
       $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='". $periodarray[0][1] ."' ";
     }
-    if ($scale != "") {
+    if ($scale != "null") {
       $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
     }
-    if ($subcontinents != "") {
+    if ($subcontinents != "null") {
       $where = $where . " AND e.region = '" . $subcontinents . "' ";
     }
-    if ($country != "") {
+    if ($country != "null") {
       $where = $where . " AND e.country = '" . $country . "' ";
     }
-    if ($adaptation != "") {
+    if ($adaptation != "null") {
       $where = $where . " AND e.adaptation = '" . $adaptation . "' ";
     }
 

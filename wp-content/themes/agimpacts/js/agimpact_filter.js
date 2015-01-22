@@ -275,11 +275,21 @@ $(document).ready(function() {
 });
 
 function downloadData() {
-  window.open(templatePath + "/agImpact_download.php?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#subcontinents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank");
+  window.open(templatePath + "/agImpact_download.php?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank");
   window.close();
 }
 
 function downloadDataCSV() {
-  window.open(templatePath + "/agImpact_downloadCSV.php?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#subcontinents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank");
+  window.open(templatePath + "/agImpact_downloadCSV.php?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank");
   window.close();
+}
+
+function viewAllFields() {
+  window.open(templatePath + "/allFieldsTable.php?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val()+"&custom=1", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=10, left=10, width=400, height=400");
+//  window.close();
+}
+
+function viewAllFieldsh() {
+  window.open(templateUrl + "/fullview/?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=10, left=10, width=400, height=400");
+//  window.close();
 }

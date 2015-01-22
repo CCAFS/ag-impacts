@@ -536,7 +536,7 @@ function dataTable() {
   }
 
   $tr = "";
-  $result = $wpdb->get_results("SELECT a.id,e.idEstimate,a.doi_article,e.spatial_scale,e.crop,e.impact_models,"
+  $sql = "SELECT a.id,e.idEstimate,a.doi_article,e.spatial_scale,e.crop,e.impact_models,"
           . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
           . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
           . " e.yield_change, CONCAT(e.region,' - ',e.country) as geograph_scope,"
@@ -545,16 +545,19 @@ function dataTable() {
           . " INNER JOIN wp_article a ON e.article_id=a.id "
           . " WHERE 1 "
           . $where
-          . " ORDER BY a.doi_article ", ARRAY_A);
-
+          . " ORDER BY a.doi_article ";
+  $result = $wpdb->get_results($sql, ARRAY_A);
+//  echo $sql;
   $table = "<p>
 	<div id='downloadFile'>
 		<h3>Download Data</h3>
 		<a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='" . get_template_directory_uri() . "/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='" . get_template_directory_uri() . "/img/csv.png'></a>
+                <button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFields()'>View all fields</button>
+                <button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFieldsh()'>View all fields header</button>
 	</div>
 
-	<table id='resulttable' class='tablesorter'>
+	<table id='resulttable' name='resulttable' class='table table-striped table-bordered'>
 	<thead>
 		<tr>
 			<th>DOI <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>

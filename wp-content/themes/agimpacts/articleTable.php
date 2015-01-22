@@ -76,7 +76,8 @@ foreach ($myarticles as $article):
       <button type="button" style="margin-bottom: 10px;" class="pure-button edit-btn" onclick="$(location).attr('href', templateUrl + '/articleDetail?article=<?php echo $article->id ?>');"><i class="fa fa-pencil-square"></i> Edit</button>
       <button type="button" style="margin-bottom: 10px;" class="pure-button" onclick="$(location).attr('href', templateUrl + '/estimate?article=<?php echo $article->id ?>');"><i class="fa fa-plus-square"></i> Add estimate</button>
       <?php if ($article->status == 0):?>
-        <button type="button" style="margin-bottom: 10px;" class="pure-button" onclick="validArticle(<?php echo $article->id ?>)"><i class="fa fa-check-square"></i> Valid article</button>
+        <!--<button type="button" style="margin-bottom: 10px;" class="pure-button" onclick="validArticle(<?php // echo $article->id ?>)"><i class="fa fa-check-square"></i> Valid article</button>-->
+        <button type="button" style="margin-bottom: 10px;" class="pure-button" onclick="$(location).attr('href', templateUrl + '/articlevalid?article=<?php echo $article->id ?>');"><i class="fa fa-check-square"></i> Valid article</button>
       <?php endif;?>
     </td>            
   </tr>

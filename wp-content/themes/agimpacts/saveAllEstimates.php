@@ -60,6 +60,4 @@ if ($_POST['estimate_id']) {
 if(!$rows_affected) {
   $wpdb->show_errors();
   $wpdb->print_error();
-} else {
-//  echo 1;
 }
