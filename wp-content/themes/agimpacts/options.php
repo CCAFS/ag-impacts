@@ -1,5 +1,4 @@
 <?php
-
 require('../../../wp-load.php');
 
 $option = $_REQUEST['option'];
@@ -481,8 +480,16 @@ function adaptationQuery() {
           . "ORDER BY e.adaptation ASC ", ARRAY_A);
 
   if (count($result) != 0) {
+    $adaptOrg = array();
     for ($i = 0; $i < count($result); $i++) {
-      $answer[] = array("id" => $result[$i]['adaptation'], "text" => $result[$i]['adaptation']);
+      $adapts = explode(',', $result[$i]['adaptation']);
+      foreach ($adapts as $adapt) {
+        $adaptOrg[trim($adapt)] = trim($adapt);
+      }
+      
+    }
+    foreach ($adaptOrg as $val) {
+      $answer[] = array("id" => $val, "text" => $val);
     }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");
@@ -533,7 +540,7 @@ function dataTable() {
   }
   if ($adaptation != "null") {
     $where = $where . " AND e.adaptation = '" . $adaptation . "' ";
-  }
+    }
 
   $tr = "";
   $sql = "SELECT a.id,e.idEstimate,a.doi_article,e.spatial_scale,e.crop,e.impact_models,"
@@ -598,5 +605,4 @@ function dataTable() {
     echo $tr = "<div style='text-align:center;'><h3>No data Found</h3></div>";
   }
 }
-
 ?>

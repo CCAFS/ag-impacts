@@ -215,7 +215,7 @@ $(document).ready(function() {
 
   $('#adaptation').select2({
     placeholder: "Choose an option...",
-    allowClear: true,
+//    allowClear: true,
     ajax: {
       url: templatePath + "/options.php",
       dataType: 'json',
@@ -258,20 +258,6 @@ $(document).ready(function() {
   $("#reset").on("click", function() {
     $('.js-data-ajax').val(null).trigger("change");
   });
-  /*$("#downloaddata").click(function(){
-   alert("funciona");
-   //downloadwindow=window.open("agImpact_download.php","_blank");
-   alert("funciona");
-   $.ajax({
-   url: "agImpact_download.php",
-   type:"POST",
-   data:"submit=&doi="+$('#doi').val()+"&scale="+$('#scale').val()+"&crop="+$('#crop').val()+"&model="+$('#model').val()+"&baseline="+$('#baseline').val()+"&period="+$('#period').val()+"&country="+$('#country').val()+"&subcontinents="+$('#subcontinents').val()+"&climate="+$('#climate').val()+"&adaptation="+$('#adaptation').val()+"&option="+11, 
-   success: function(datos){
-   $('#success').append(datos);
-   
-   }
-   });
-   });*/
 });
 
 function downloadData() {

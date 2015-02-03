@@ -59,7 +59,7 @@ if (isset($_POST['pn'])) {
 
 //  $sql1 = "SELECT * FROM $tablename a WHERE $where ORDER BY ID $limit";
   $sql1 = "SELECT a.*, b.count as count FROM $tablename a LEFT JOIN (SELECT article_id, count(*) as count FROM $tablename2 GROUP by article_id) b ON (a.ID = b.article_id) WHERE $where ORDER BY ID $limit";
-  echo $sql1;
+//  echo $sql1;
   $myarticles = $wpdb->get_results($sql1);
 }
 

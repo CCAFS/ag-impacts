@@ -102,6 +102,10 @@ if ($last < 1) {
 
     var pstart = pnt - 2;
     var plimit = pnt + 2;
+    if (pstart <= 0) {
+      pstart = 1;
+      plimit = last;
+    }
     var paginationCtrls = "";
     // Only if there is more than 1 page worth of results give the user pagination controls
     if (last != 1) {
