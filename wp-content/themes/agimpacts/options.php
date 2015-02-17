@@ -434,7 +434,7 @@ function countryQuery() {
 
 function adaptationQuery() {
   global $wpdb;
-  $answer[0] = array("id" => "", "text" => "");
+//  $answer[0] = array("id" => "", "text" => "");
   $adaptation = $_REQUEST['adaptation'];
   $crop = $_REQUEST['crop'];
   $model = $_REQUEST['model'];
@@ -445,6 +445,7 @@ function adaptationQuery() {
   $country = $_REQUEST['country'];
   $subcontinents = $_REQUEST['subcontinents'];
   $where = "  ";
+  $adptationDesc = array('CA'=>'Cultivar adaptation', 'FO'=>'Fertilizer optimization', 'TC'=>'TC', 'PDA'=>'Planting date adjustment', 'IO'=>'Irrigation optimization', 'PCA'=>'PCA');
 
   if ($crop != "") {
     $where = $where . " AND e.crop = '" . $crop . "' ";
@@ -489,7 +490,7 @@ function adaptationQuery() {
       
     }
     foreach ($adaptOrg as $val) {
-      $answer[] = array("id" => $val, "text" => $val);
+      $answer[] = array("id" => $val, "text" => ((isset($adptationDesc[$val]))? $adptationDesc[$val]: $val));
     }
   } else {
     $answer[] = array("id" => "0", "text" => "No Results Found..");

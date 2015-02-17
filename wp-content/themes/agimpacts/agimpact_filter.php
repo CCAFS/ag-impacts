@@ -35,7 +35,7 @@ get_header();
           <!--<input type="hidden" name="crop" id="crop" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />-->
         </div>
         <div class="pure-u-1 pure-u-md-1-3" style="height: 45px">
-          <label for="model">Multi Model Ensemble</label>
+          <label for="model">Impact model(s)</label>
           <!--<input type="hidden" name="model" id="model" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />-->
           <select class="js-data-ajax" style="width: 300px;" name="model" id="model">
             <?php
@@ -122,7 +122,7 @@ get_header();
         <select class="js-data-ajax" style="width: 300px;" name="period" id="period">
           <?php
           if (isset($_GET['period'])) {
-            echo "<option value'" . $_GET['period'] . "' selected='selected'>" . $_GET['period'] . "</option>";
+            echo "<option value='" . $_GET['period'] . "' selected='selected'>" . $_GET['period'] . "</option>";
           }
           ?>
         </select>
@@ -133,10 +133,13 @@ get_header();
       <div style="height: 45px">
         <label for="adaptation">Adaptation Column</label>
         <!--<input type="hidden" name="adaptation" id="adaptation" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />-->
-        <select class="js-data-ajax" style="width: 300px;box-shadow: none!important;" name="adaptation" id="adaptation" multiple="multiple">
+        <select class="js-data-ajax" style="width: 300px;box-shadow: none!important;" name="adaptation[]" id="adaptation" multiple="multiple">
           <?php
+          $adaptationDesc = array('CA'=>'Cultivar adaptation', 'FO'=>'Fertilizer optimization', 'TC'=>'TC', 'PDA'=>'Planting date adjustment', 'IO'=>'Irrigation optimization', 'PCA'=>'PCA');
           if (isset($_GET['adaptation'])) {
-            echo "<option value'" . $_GET['adaptation'] . "' selected='selected'>" . $_GET['adaptation'] . "</option>";
+            foreach ($_GET['adaptation'] as $key => $adapt) {
+              echo "<option value='" . $adapt . "' selected='selected'>" . ((isset($adaptationDesc[$adapt]))? $adaptationDesc[$adapt] : $adapt) . "</option>";
+            }
           }
           ?>
         </select>
@@ -152,15 +155,15 @@ get_header();
     <h3>Download Data</h3>
     <a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='<?php echo get_template_directory_uri() ?>/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='<?php echo get_template_directory_uri() ?>/img/csv.png'></a>
-    <button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFields()'>View all fields</button>
-    <button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFieldsh()'>View all fields header</button>
+    <!--<button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFields()'>View all fields</button>-->
+    <!--<button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFieldsh()'>View all fields header</button>-->
   </div>
   <div id="resultsx"><h3>Results</h3>
     <table id='resulttablex' name='resulttablex' class="display">
       <thead>
         <tr>
-                <th>DOI <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>
-                <th>Spatial Scale <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>
+                <!--<th>DOI <input type=\"checkbox\" name='columns' value='doi'></th>-->
+                <!--<th>Spatial Scale <input type=\"checkbox\" name='columns' value='doi'></th>-->
                 <th>Crop <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>
                 <th>Multi-Model <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>
                 <th>Baseline Period <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>

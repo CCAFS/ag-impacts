@@ -25,17 +25,17 @@ $current_user = wp_get_current_user();
           <input id="doi" name="doi" type="text" class="pure-input-1-3" placeholder="DOI" value="<?php echo (isset($myarticle['doi_article'])) ? $myarticle['doi_article'] : ''; ?>">
         </div>
         <div class="pure-controls">
-            <button type="button" class="pure-button pure-button-primary" onclick="validDoi($('#doi').val())">Validate</button>
+            <button type="button" class="pure-button pure-button-primary" onclick="validDoi($('#doi').val())">Get metadata</button>
         </div>
         <hr>
         <div class="pure-control-group">
           <label for="title">Title</label>
           <input id="title" name="title" type="text" class="pure-input-1-3" placeholder="Title" value="<?php echo (isset($myarticle['paper_title'])) ? $myarticle['paper_title'] : ''; ?>">
         </div>
-        <div class="pure-control-group">
+<!--        <div class="pure-control-group">
           <label for="author">Author(s)</label>
-          <input id="author" name="author" type="text" class="pure-input-1-3" placeholder="Author" value="<?php echo (isset($myarticle['author'])) ? $myarticle['author'] : ''; ?>">
-        </div>
+          <input id="author" name="author" type="text" class="pure-input-1-3" placeholder="Author" value="<?php // echo (isset($myarticle['author'])) ? $myarticle['author'] : ''; ?>">
+        </div>-->
         <div class="pure-control-group">
           <label for="year">Year</label>
           <input id="year" name="year" type="text" class="pure-input-1-3" placeholder="Year" value="<?php echo (isset($myarticle['year'])) ? $myarticle['year'] : ''; ?>">

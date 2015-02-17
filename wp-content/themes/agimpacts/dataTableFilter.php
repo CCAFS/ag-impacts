@@ -79,7 +79,7 @@ $result = $wpdb->get_row($sql1);
 $total_rows = $result->total;
 // DB table to use
 $limit = 'LIMIT ' . $_GET['start'] . ',' . $_GET['length'];
-$sql1 = "SELECT a.doi_article,e.spatial_scale,e.crop,e.impact_models,"
+$sql1 = "SELECT e.crop,e.impact_models,"
           . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
           . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
           . " e.yield_change, CONCAT(e.region,' - ',e.country) as geograph_scope,"
