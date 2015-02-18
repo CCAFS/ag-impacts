@@ -6,12 +6,13 @@
  */
 //require('../../../../wp-load.php');
 get_header();
+$version = '1.1';
 ?>
 <script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false'></script>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.css">
-<script src="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.min.js"></script>
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/agimpact_filter.js"></script>
-<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/agimpact_filter.css">
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.css?<?php echo $version;?>">
+<script src="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.min.js?<?php echo $version;?>"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/agimpact_filter.js?<?php echo $version;?>"></script>
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/agimpact_filter.css?<?php echo $version;?>">
 <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/jqueryui/dataTables.jqueryui.css">
 <script type="text/javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">

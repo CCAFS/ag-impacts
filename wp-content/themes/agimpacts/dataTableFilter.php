@@ -79,18 +79,29 @@ $result = $wpdb->get_row($sql1);
 $total_rows = $result->total;
 // DB table to use
 $limit = 'LIMIT ' . $_GET['start'] . ',' . $_GET['length'];
-$sql1 = "SELECT e.crop,e.impact_models,"
+$select = '';
+if (isset($_REQUEST['allfields'])) {
+  $select = "a.*,e.*,"
+          . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
+          . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
+          . " CONCAT(e.region,' - ',e.country) as geograph_scope";
+} else {
+  $select = "e.crop,e.impact_models,"
           . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
           . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
           . " e.yield_change, CONCAT(e.region,' - ',e.country) as geograph_scope,"
-          . " e.temp_change,e.climate_scenario, e.adaptation "
-          . " FROM wp_estimate e "
-          . " INNER JOIN wp_article a ON e.article_id=a.id "
-          . " WHERE 1 "
-          . $where
-          . " ORDER BY a.doi_article $limit";
+          . " e.temp_change,e.climate_scenario, e.adaptation";
+}
+
+$sql1 = "SELECT " 
+        . $select
+        . " FROM wp_estimate e "
+        . " INNER JOIN wp_article a ON e.article_id=a.id "
+        . " WHERE 1 "
+        . $where
+        . " ORDER BY a.doi_article $limit";
 //  echo $sql1;
-  $result = $wpdb->get_results($sql1,ARRAY_N);
+$result = $wpdb->get_results($sql1, ARRAY_N);
 
 echo json_encode(
         array(
