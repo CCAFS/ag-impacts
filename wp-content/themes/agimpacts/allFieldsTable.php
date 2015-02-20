@@ -22,12 +22,17 @@
  */
 if (isset($_REQUEST['custom'])) {
   require('../../../wp-load.php');
-  ?><script src="<?php  echo get_template_directory_uri();  ?>/js/jquery-1.11.1.min.js"></script><?php
+  ?><script src="<?php echo get_template_directory_uri(); ?>/js/jquery-1.11.1.min.js"></script><?php
 } else {
   get_header();
 }
 global $wpdb;
+$version = '1.1';
 ?>
+<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/jqueryui/dataTables.jqueryui.css">
+<script type="text/javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/agimpact_filter.css?<?php echo $version;?>">
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/tablesorter/css/theme.green.css">
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/tablesorter/js/jquery.tablesorter.js"></script>
 <?php
@@ -83,10 +88,10 @@ $result = "SELECT a.*,e.*,"
         . $where
         . " ORDER BY a.id ";
 //echo $result; exit();
-$dataResult = $wpdb->get_results($result, ARRAY_A);
-if (count($dataResult)) {
-  $table = "
-	<table id='resulttable' class='tablesorter'>
+//$dataResult = $wpdb->get_results($result, ARRAY_A);
+//if (count($dataResult)) {
+  echo "
+	<section id='content' class='row'><table id='resulttable' name='resulttable' class='display' style=''>
 	<thead>
 		<tr>
 			<th>DOI <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>
@@ -132,59 +137,39 @@ if (count($dataResult)) {
 			<th>Status <!--<input type=\"checkbox\" name='columns' value='doi'>--></th>
 		</tr>
 	</thead>
-	<tbody>";
-//  if (count($result) != 0) {
-  for ($i = 0; $i < count($dataResult); $i++) {
-    $status = ($dataResult[$i]['doi_article'] == 0) ? 'new' : 'Validated';
-    $tr = $tr . "<tr>
-                    <td>" . $dataResult[$i]['doi_article'] . "</td>
-                    <td>" . $dataResult[$i]['author'] . "</td>
-                    <td>" . $dataResult[$i]['year'] . "</td>
-                    <td>" . $dataResult[$i]['journal'] . "</td>
-                    <td>" . $dataResult[$i]['volume'] . "</td>
-                    <td>" . $dataResult[$i]['issue'] . "</td>
-                    <td>" . $dataResult[$i]['page_start'] . "</td>
-                    <td>" . $dataResult[$i]['page_end'] . "</td>
-                    <td>" . $dataResult[$i]['reference'] . "</td>
-                    <td>" . $dataResult[$i]['paper_title'] . "</td>
-                    <td>" . $dataResult[$i]['crop'] . "</td>
-                    <td>" . $dataResult[$i]['scientific_name'] . "</td>
-                    <td>" . $dataResult[$i]['projection_co2'] . "</td>
-                    <td>" . $dataResult[$i]['baseline_co2'] . "</td>
-                    <td>" . $dataResult[$i]['temp_change'] . "</td>
-                    <td>" . $dataResult[$i]['precipitation_change'] . "</td>
-                    <td>" . $dataResult[$i]['yield_change'] . "</td>
-                    <td>" . $dataResult[$i]['projec_yield_change_start'] . "</td>
-                    <td>" . $dataResult[$i]['projec_yield_change_end'] . "</td>
-                    <td>" . $dataResult[$i]['adaptation'] . "</td>
-                    <td>" . $dataResult[$i]['climate_scenario'] . "</td>
-                    <td>" . $dataResult[$i]['num_gcm_used'] . "</td>
-                    <td>" . $dataResult[$i]['gcm'] . "</td>
-                    <td>" . $dataResult[$i]['num_impact_model_used'] . "</td>
-                    <td>" . $dataResult[$i]['impact_models'] . "</td>
-                    <td>" . $dataResult[$i]['base_line_start'] . "</td>
-                    <td>" . $dataResult[$i]['base_line_end'] . "</td>
-                    <td>" . $dataResult[$i]['projection_start'] . "</td>
-                    <td>" . $dataResult[$i]['projection_end'] . "</td>
-                    <td>" . $dataResult[$i]['geo_scope'] . "</td>
-                    <td>" . $dataResult[$i]['region'] . "</td>
-                    <td>" . $dataResult[$i]['country'] . "</td>
-                    <td>" . $dataResult[$i]['state'] . "</td>
-                    <td>" . $dataResult[$i]['city'] . "</td>
-                    <td>" . $dataResult[$i]['latitude'] . "</td>
-                    <td>" . $dataResult[$i]['longitude'] . "</td>
-                    <td>" . $dataResult[$i]['spatial_scale'] . "</td>
-                    <td>" . $dataResult[$i]['comments'] . "</td>
-                    <td>" . $dataResult[$i]['contributor'] . "</td>
-                    <td>" . $status . "</td>
-            </tr>";
-  }
-  echo $table . $tr . "</tbody>
-                </table>";
-  echo "<script language='javascript'>$('#resulttable').tablesorter({theme: 'green'});</script>";
-} else {
-  echo "<script language='javascript'>alert('No Data Found');</script>";
-}
+	<tbody>
+        </table></section>";
+  echo "<script language='javascript'>"
+  . "$(document).ready(function() {
+    $('#resulttable').dataTable({
+      'scrollX': true,
+      'scrollY': 400,
+      'jQueryUI': true,
+      'processing': true,
+      'serverSide': true,
+      'searching': false,
+      'ajax': {
+        url: '".get_bloginfo("url")."/wp-content/themes/agimpacts/dataTableFilter.php',
+        type: 'POST',
+        data: function(d) {
+          d.crop = ".$_REQUEST['crop'].";
+          d.model = ".$_REQUEST['model'].";
+          d.scale = ".$_REQUEST['scale'].";
+          d.climate = ".$_REQUEST['climate'].";
+          d.baseline = ".$_REQUEST['baseline'].";
+          d.period = ".$_REQUEST['period'].";
+          d.country = ".$_REQUEST['country'].";
+          d.allfields = true;
+          d.subcontinents = ".$_REQUEST['subcontinents'].";
+          d.adaptation = ".$_REQUEST['adaptation'].";
+        }
+      }
+    });
+  });"
+  . "</script>";
+//} else {
+//  echo "<script language='javascript'>alert('No Data Found');</script>";
+//}
 
 
   

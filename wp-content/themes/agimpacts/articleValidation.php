@@ -179,7 +179,7 @@ $dataResultEstimate = $wpdb->get_results($result, ARRAY_A);
               <td><span style='display:none'><?php echo $dataResultEstimate[$i]['precipitation_change'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][precipitation_change]' id='precipitation_change' value='<?php echo $dataResultEstimate[$i]['precipitation_change'] ?>'/></td>
               <td><span style='display:none'><?php echo $dataResultEstimate[$i]['yield_change'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][yield_change]' id='yield_change' value='<?php echo $dataResultEstimate[$i]['yield_change'] ?>'/></td>
               <td><span style='display:none'><?php echo $dataResultEstimate[$i]['projec_yield_change_start'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][projec_yield_change_start]' id='projec_yield_change_start' value='<?php echo $dataResultEstimate[$i]['projec_yield_change_start'] ?>'/></td>
-              <td><span style='display:none'><?php echo $dataResultEstimate[$i]['projec_yield_change_end'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][projec_yield_change_end]' id='projec_yield_change_end' value='<?php echo $dataResultEstimate[$i]['projec_yield_change_end'] ?>'/></td>
+              <td><span style='display:none'><?php echo $dataResultEstimate[$i]['project_yield_change_end'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][project_yield_change_end]' id='projec_yield_change_end' value='<?php echo $dataResultEstimate[$i]['project_yield_change_end'] ?>'/></td>
               <td><span style='display:none'><?php echo $dataResultEstimate[$i]['adaptation'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][adaptation]' id='adaptation' value='<?php echo $dataResultEstimate[$i]['adaptation'] ?>'/></td>
               <td><span style='display:none'><?php echo $dataResultEstimate[$i]['climate_scenario'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][climate_scenario]' id='climate_scenario' value='<?php echo $dataResultEstimate[$i]['climate_scenario'] ?>'/></td>
               <td><span style='display:none'><?php echo $dataResultEstimate[$i]['num_gcm_used'] ?></span><input type='text' name='estimate[<?php echo $dataResultEstimate[$i]['idEstimate'] ?>][num_gcm_used]' id='num_gcm_used' value='<?php echo $dataResultEstimate[$i]['num_gcm_used'] ?>'/></td>
@@ -254,7 +254,12 @@ $dataResultEstimate = $wpdb->get_results($result, ARRAY_A);
                   //                  text: result
                   //                });
                 } else {
-                  //                location.reload();
+                  var n = noty({
+                      layout: 'top',
+                      type: 'success',
+                      timeout: 6000,
+                      text: 'Register validated'
+                    });
                 }
               },
               complete: function() {

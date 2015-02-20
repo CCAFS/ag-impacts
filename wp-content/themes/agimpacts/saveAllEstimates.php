@@ -29,11 +29,11 @@ $estimate['precipitation_change'] = ($_POST['precipitation_change'] != '' && $_P
 $estimate['yield_change'] = ($_POST['yield_change'] != '' && $_POST['yield_change'] != 'N/A') ? $_POST['yield_change'] : 0;
 $estimate['projec_yield_change_start'] = ($_POST['projec_yield_change_start'] != '' && $_POST['projec_yield_change_start'] != 'N/A') ? $_POST['projec_yield_change_start'] : 0;
 $estimate['project_yield_change_end'] = ($_POST['project_yield_change_end'] != '' && $_POST['project_yield_change_end'] != 'N/A') ? $_POST['project_yield_change_end'] : 0;
-//$estimate['adaptation'] = $_POST[19];
+$estimate['adaptation'] = implode(',', $_POST['adaptation']);
 $estimate['climate_scenario'] = $_POST['climate_scenario'];
-//$estimate['num_gcm_used'] = ($_POST[21] != '' && $_POST[21] != 'N/A') ? $_POST[21] : 0;
+$estimate['num_gcm_used'] = count(explode(',',$_POST['gcm']));
 $estimate['gcm'] = $_POST['gcm'];
-//$estimate['num_impact_model_used'] = ($_POST[23] != '' && $_POST[23] != 'N/A') ? $_POST[23] : 0;
+$estimate['num_impact_model_used'] = count(explode(',',$_POST['impact_models']));
 $estimate['impact_models'] = $_POST['impact_models'];
 $estimate['base_line_start'] = ($_POST['base_line_start'] != '' && $_POST['base_line_start'] != 'N/A') ? $_POST['base_line_start'] : 0;
 $estimate['base_line_end'] = ($_POST['base_line_end'] != '' && $_POST['base_line_end'] != 'N/A') ? $_POST['base_line_end'] : 0;
@@ -60,4 +60,7 @@ if ($_POST['estimate_id']) {
 if(!$rows_affected) {
   $wpdb->show_errors();
   $wpdb->print_error();
+} else {
+  $tablename = $wpdb->prefix . 'article';
+  $wpdb->update($tablename, array('status' => '0'), array( 'id' => $_GET['article'] ));
 }

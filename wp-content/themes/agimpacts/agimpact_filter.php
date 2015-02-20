@@ -157,7 +157,7 @@ $version = '1.1';
     <a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='<?php echo get_template_directory_uri() ?>/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='<?php echo get_template_directory_uri() ?>/img/csv.png'></a>
     <!--<button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFields()'>View all fields</button>-->
-    <!--<button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFieldsh()'>View all fields header</button>-->
+    <button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFieldsh()'>View all fields</button>
   </div>
   <div id="resultsx"><h3>Results</h3>
     <table id='resulttablex' name='resulttablex' class="display">
@@ -181,7 +181,7 @@ $version = '1.1';
   </div>
 </p>
 <br>
-<h3>Map view</h3>
+<h3 id="map_title" name="map_title">Map view</h3>
 <div style="width:700px;height:400px;" id="map-canvas"></div>
 <br>
 </section>
@@ -206,6 +206,7 @@ $version = '1.1';
 //    var image = "<?php // bloginfo('template_directory');     ?>/images/ccafs_sites-miniH.png";
     var infobox;
     var markeri = new google.maps.Marker();
+    $("#map_title").append("<bold> ("+results.features.length+" estimates on the map)</bold>");
     for (var i = 0; i < results.features.length; i++) {
       idx = i;
       var coords = results.features[i].geometry.coordinates;

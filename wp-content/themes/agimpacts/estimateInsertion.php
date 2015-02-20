@@ -40,7 +40,8 @@ if ($_GET['article']) {
 }
 //echo "$$".$myestimates."$$";
 ?>
-
+<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.css?<?php echo $version;?>">
+<script src="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.min.js?<?php echo $version;?>"></script>
 <div id="loading"><img style="" src="<?php echo get_template_directory_uri(); ?>/img/loading.gif" alt="Loader" /></div>
 <input type="hidden" name="estimate_count" id="estimate_count" value="<?php echo (count($myestimates) > 0) ? count($myestimates) : 1 ?>">
 <section id="content" class="row"> 
@@ -86,7 +87,8 @@ if ($_GET['article']) {
       ?>
     </div>
     <div float="right" style="position: absolute; right: 5px">
-      <button class="pure-button" onclick="addEstimate('article_id=<?php echo $_GET['article']?>')">Add Entry</button> <button class="pure-button">Save all</button>
+      <button class="pure-button" onclick="addEstimate('article_id=<?php echo $_GET['article']?>')">Add Entry</button> 
+      <button class="pure-button" onclick='saveAll()'>Save all</button>
       <button id="btnha" class="pure-button btnha" onclick="$('.pure-form').hide();
           $('.hideSingle').hide();
           $('.showSingle').show();

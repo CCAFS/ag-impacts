@@ -114,7 +114,7 @@ if (!isset($myestimates) || is_null($myestimates)) {
       </div>
       <div class="pure-control-group">
         <label for="comment">Comments</label>
-        <textarea id='comments' rows="4" cols="50"><?php echo (isset($current_estimate['comments'])) ? $current_estimate['comments'] : ''; ?></textarea>
+        <textarea id='comments' name='comments' rows="4" cols="50"><?php echo (isset($current_estimate['comments'])) ? $current_estimate['comments'] : ''; ?></textarea>
       </div>
       <div class="pure-control-group">
         <label for="geo_scope">Geog. Scope</label>
@@ -148,20 +148,35 @@ if (!isset($myestimates) || is_null($myestimates)) {
         <label for="longitude">Longitude</label>
         <input id="longitude" name="longitude" type="text" class="pure-input-1-3" placeholder="Longitude" value="<?php echo (isset($current_estimate['longitude'])) ? $current_estimate['longitude'] : ''; ?>">
       </div>
+      <div style="height: 45px" class="pure-control-group">
+        <label for="adaptation">Adaptation Column <?php echo $current_estimate['adaptation'] ?></label>
+        <!--<input type="hidden" name="adaptation" id="adaptation" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />-->
+        <select class="js-data-ajax" style="width: 300px;box-shadow: none!important;" name="adaptation[]" id="adaptation" multiple="multiple">
+          <?php
+          $adaptationDesc = array('CA' => 'Cultivar adaptation', 'FO' => 'Fertilizer optimization', 'TC' => 'TC', 'PDA' => 'Planting date adjustment', 'IO' => 'Irrigation optimization', 'PCA' => 'PCA');
+          foreach ($adaptationDesc as $key => $adapt) {
+            echo "<option value='" . $key . "' " . ((strpos($current_estimate['adaptation'], $key) !== false) ? "selected='selected'" : "") . ">" . $adapt . "</option>";
+          }
+          ?>
+        </select>
+      </div>
     </fieldset>
-    <?php if(isset($current_estimate['idEstimate'])):?>
-      <input id="estimate_id" name="estimate_id" type="hidden" value="<?php echo $current_estimate['idEstimate']?>">
-    <?php endif;?>
+    <?php if (isset($current_estimate['idEstimate'])): ?>
+      <input id="estimate_id" name="estimate_id" type="hidden" value="<?php echo $current_estimate['idEstimate'] ?>">
+    <?php endif; ?>
   </form>
   <hr>
   <script>
-    $("#estimateForm<?php echo $id; ?>").on('submit', function(e) {
-      var form = $(this);//this refers to the form
+    $(document).ready(function() {
+      $("#adaptation").select2();
+      $("#estimateForm<?php echo $id; ?>").on('submit', function(e) {
+        var form = $(this);//this refers to the form
 //      alert(form.serialize());
 //    var notes_id = form.find('input[name=crop]').val();
 //    var notes_text = form.find('textarea[id=comment]').val();
-      saveOne(form.serialize(),<?php echo $articleId ?>);
-      e.preventDefault();
-    });
+        saveOne(form.serialize(),<?php echo $articleId ?>);
+        e.preventDefault();
+      });
+    })
   </script>
 </div>

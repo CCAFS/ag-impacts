@@ -21,7 +21,7 @@
  * Easy set variables
  */
 require('../../../wp-load.php');
-$crop = $_GET['crop'];
+$crop = $_REQUEST['crop'];
 $model = $_REQUEST['model'];
 $climate = $_REQUEST['climate'];
 $baseline = $_REQUEST['baseline'];
@@ -29,7 +29,7 @@ $period = $_REQUEST['period'];
 $scale = $_REQUEST['scale'];
 $country = $_REQUEST['country'];
 $subcontinents = $_REQUEST['subcontinents'];
-$adaptation = $_GET['adaptation'];
+$adaptation = $_REQUEST['adaptation'];
 $where = "  ";
 
 if ($crop != "") {
@@ -78,13 +78,12 @@ $result = $wpdb->get_row($sql1);
 
 $total_rows = $result->total;
 // DB table to use
-$limit = 'LIMIT ' . $_GET['start'] . ',' . $_GET['length'];
+$limit = 'LIMIT ' . $_REQUEST['start'] . ',' . $_REQUEST['length'];
 $select = '';
 if (isset($_REQUEST['allfields'])) {
-  $select = "a.*,e.*,"
-          . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
-          . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
-          . " CONCAT(e.region,' - ',e.country) as geograph_scope";
+  $select = "a.doi_article, a.author, a.year, a.journal, a.volume, a.issue, a.page_start, a.page_end, a.reference, a.paper_title, e.crop, e.scientific_name, e.projection_co2, e.baseline_co2, e.temp_change, e.precipitation_change,"
+          . "e.yield_change, e.projec_yield_change_start, e.project_yield_change_end, e.adaptation, e.climate_scenario, num_gcm_used, gcm, num_impact_model_used, impact_models, base_line_start, base_line_end, projection_start, projection_end,"
+          . "geo_scope, region, country, state, city, latitude, longitude, spatial_scale, comments, contributor,  CASE e.status WHEN 1 THEN 'Validated' ELSE 'New' END as status ";
 } else {
   $select = "e.crop,e.impact_models,"
           . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
