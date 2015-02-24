@@ -28,7 +28,8 @@ $baseline = $_REQUEST['baseline'];
 $period = $_REQUEST['period'];
 $scale = $_REQUEST['scale'];
 $country = $_REQUEST['country'];
-$subcontinents = $_REQUEST['subcontinents'];
+$continents = $_REQUEST['continents'];
+$regions = $_REQUEST['regions'];
 $adaptation = $_REQUEST['adaptation'];
 $where = "  ";
 
@@ -52,11 +53,14 @@ if ($period != '') {
 if ($scale) {
   $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
 }
-if ($subcontinents) {
-  $where = $where . " AND e.region = '" . $subcontinents . "' ";
-}
 if ($country) {
   $where = $where . " AND e.country = '" . $country . "' ";
+}
+elseif ($continents) {
+  $where = $where . " AND e.geo_scope = '" . $continents . "' ";
+}
+elseif ($regions) {
+  $where = $where . " AND e.region = '" . $regions . "' ";
 }
 if ($adaptation) {
 //  $adaptation = explode(',', $adaptation);

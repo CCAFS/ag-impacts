@@ -297,7 +297,8 @@ $version = '1.1';
           d.baseline = $('#baseline').val();
           d.period = $('#period').val();
           d.country = $('#country').val();
-          d.subcontinents = $('#subcontinents').val();
+          d.continents = $('#continents').val();
+          d.regions = $('#regions').val();
           d.adaptation = $('#adaptation').val();
         }
       }

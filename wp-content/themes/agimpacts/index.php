@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <section id="content" class="row"> 
-  <div id="home-content">
+  <div id="home-content" class="table-ag">
     <img class="left" src="<?php echo get_template_directory_uri(); ?>/img/images/ag-home-image.png">
     <p>CCAFS and University of Leeds, with the collaboration of other institutions (CSIRO, Stanford University) are developing a platform to facilitate the investigation of climate change impacts on agriculture. The database that will appear here has been used in the food chapters of the IPCC 4th and 5th assessment reports. The data consists of peer-reviewed literature reports on yield projections from crop simulation studies.</p>
     <p>Examples of the use of the database are in Fig. 5.2 of Easterling et al. (2007) (available at <a style="text-decoration: underline;" href="http://www.ipcc.ch/pdf/assessment-report/ar4/wg2/ar4-wg2-chapter5.pdf">http://www.ipcc.ch/pdf/assessment-report/ar4/wg2/ar4-wg2-chapter5.pdf</a>), and also in Challinor et al. (2014). We envisage this portal and database will be key to assessing consensus and robustness across studies on climate change impacts on crops.</p>
@@ -18,6 +18,9 @@
       </li>
     </ul>
     <!--</p>-->
+  </div>
+  <div class="sidebar-ag table-ag">
+    <?php dynamic_sidebar('analitics'); ?>
   </div>
 </section>
 

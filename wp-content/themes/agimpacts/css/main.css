@@ -383,3 +383,22 @@ button#btn-login {
   box-shadow: 0 0 8px #FFF;
   border-radius: 10px 10px 10px 10px;
 }
+
+.sidebar-ag {
+  width: 300px;
+  
+}
+
+.table-ag {
+  display: table-cell;
+}
+
+.statistic-ag {
+   border: 1px solid #DBDBDB;
+   margin: 15px;
+   padding: 7px;
+}
+
+.statistic-ag-table table, th{
+  border-bottom: 1px solid black;
+}
