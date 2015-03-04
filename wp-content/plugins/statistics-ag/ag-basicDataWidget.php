@@ -52,23 +52,20 @@ class basicDataWidget extends WP_Widget {
     $article_count = $wpdb->get_var( "SELECT COUNT(*) FROM $tablename1" );
     $estimate_count = $wpdb->get_var( "SELECT COUNT(*) FROM $tablename2" );
 //    $rows = $wpdb->get_results($sql, ARRAY_A);
-    ?>
-    <style>
-      #basic-table td, #basic-table th{
-	border:1px solid black;
-      }
-    </style>
+    ?> 
     <div class="statistic-ag">
-      <h4 style="margin: 0.33em 0;">Basic statistics</h4>
-      <table id="basic-table" class="statistic-ag-table latesd-table">
-        <tr>
-          <th># Total of articles</th>
-          <td><?php echo $article_count?></td>
-        </tr>
-        <tr>
-          <th># Total of estimates</th>
-          <td><?php echo $estimate_count?></td>
-        </tr>
+      <h4>Basic statistics</h4>
+      <table id="basic-table" class="statistic-ag-table latesd-table pure-table pure-table-horizontal">
+        <tbody>
+          <tr>
+            <td># Total of articles</td>
+            <td><?php echo $article_count?></td>
+          </tr>
+          <tr>
+            <td># Total of estimates</td>
+            <td><?php echo $estimate_count?></td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <?php

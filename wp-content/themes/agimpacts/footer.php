@@ -1,4 +1,4 @@
-
+<div class="clearfix"></div>
 <div id="partners" >
 		<ul id="partners-logos" class="row"> 
 	    <li> <a href="http://ciat.cgiar.org/" target="_blank"> <img src="<?php echo get_template_directory_uri(); ?>/img/logos/logos_01.png" /></a> </li>

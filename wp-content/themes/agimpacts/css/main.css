@@ -76,9 +76,10 @@ footer{
 
 
 #content-menubar{
-  height:   40px;
+  height: 26px;
   background:   #f1f1f1;
   padding-top: 7px;
+  margin-bottom: 8px;
 }
 
 ul#breadcrumb {
@@ -94,6 +95,8 @@ ul#breadcrumb li {
 
 #home-content {
   min-height: 574px;
+  width: 64%;
+  float: left;
 }
 
 #home-content img{
@@ -145,6 +148,9 @@ div#search {
   float: left;
 }
 
+.centered{
+  text-align: center;
+}
 
 /* Pure CSS Style */
 
@@ -385,18 +391,45 @@ button#btn-login {
 }
 
 .sidebar-ag {
-  width: 300px;
+  /* border: 1px solid #DBDBDB; */    
+  padding: 0 14px;;
+  margin-bottom: 2em;
+  width: 30%;
   
+  float: right;
 }
 
 .table-ag {
-  display: table-cell;
+  /* display: table-cell; */
 }
 
-.statistic-ag {
-   border: 1px solid #DBDBDB;
-   margin: 15px;
-   padding: 7px;
+.statistic-ag h4{
+    font-size: 1.1em;
+    margin: 1.33em 0 0.5em 0;
+  
+    color: #1D1D1D;
+}
+
+.statistic-ag table{ 
+  width: 100%;
+  font-size: 0.9em;
+}
+
+.statistic-ag table thead {
+background: #00A261;
+color: #FFF;
+text-align: left;
+vertical-align: bottom;
+}
+
+.statistic-ag table th {
+ 
+}
+.statistic-ag table td {
+    color: #444;
+    padding: 0.5em .8em;
+ 
+    font-size: 0.9em;
 }
 
 .statistic-ag-table table, th{

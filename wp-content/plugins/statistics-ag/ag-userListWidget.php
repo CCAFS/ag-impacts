@@ -74,22 +74,26 @@ class userListWidget extends WP_Widget {
 //    echo "<pre>" . print_r($users, true) . "</pre>";
     ?>
     <div class="statistic-ag">
-      <h4 style="margin: 0.33em 0;">Top <?php echo ($limit/3)?> users</h4>
-      <table class="statistic-ag-table">
-        <tr>
-          <th>User</th>
-          <th>Gold</th>
-          <th>Silver</th>
-          <th>Bronze</th>
-        </tr>
-        <?php foreach ($users as $user) : ?>
+      <h4>Top <?php echo ($limit/3)?> users</h4>
+      <table class="statistic-ag-table pure-table pure-table-horizontal">
+        <thead>
           <tr>
-            <td style="border-right: 1px solid black;"> <?php echo $user['user_login'] ?></td>
-            <td style="border-right: 1px solid black; text-align: center"><?php echo $user['gold'] ?></td>
-            <td style="text-align: center"><?php echo ($user['silver']) ? $user['silver'] : 0 ?></td>
-            <td style="text-align: center"><?php echo ($user['bronze']) ? $user['bronze'] : 0 ?></td>
+            <th>User</th>
+            <th>Gold</th>
+            <th>Silver</th>
+            <th>Bronze</th>
           </tr>
-        <?php endforeach; ?>
+        </thead>
+        <tbody>
+          <?php foreach ($users as $user) : ?>
+          <tr>
+            <td><?php echo $user['user_login'] ?></td>
+            <td class="centered"><?php echo $user['gold'] ?></td>
+            <td class="centered"><?php echo ($user['silver']) ? $user['silver'] : 0 ?></td>
+            <td class="centered"><?php echo ($user['bronze']) ? $user['bronze'] : 0 ?></td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
       </table>
     </div>
         <?php

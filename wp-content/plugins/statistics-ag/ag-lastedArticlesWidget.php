@@ -53,28 +53,27 @@ class latesdArticlesWidget extends WP_Widget {
     $tablename1 = $wpdb->prefix . 'article';
     $sql = "SELECT * FROM $tablename1 as a WHERE status = '1' order by ID DESC limit $limit";
     $rows = $wpdb->get_results($sql, ARRAY_A);
-    ?>
-    <style>
-      #latesd-table td, #latesd-table th{
-	border:1px solid black;
-      }
-    </style>
+    ?> 
     <div class="statistic-ag">
-      <h4 style="margin: 0.33em 0;">Latesd <?php echo ($limit)?> articles added</h4>
-      <table id="latesd-table" class="statistic-ag-table latesd-table">
-        <tr>
-          <th>DOI</th>
-          <th>TITLE</th>
-          <th>YEAR</th>
-          <!--<th>Bronze</th>-->
-        </tr>
-        <?php foreach ($rows as $row) : ?>
+      <h4>Latesd <?php echo ($limit)?> articles added</h4>
+      <table id="latesd-table" class="statistic-ag-table latesd-table pure-table pure-table-horizontal">
+        <thead>
           <tr>
-            <td style="border-right: 1px solid black;"> <?php echo $row['doi_article'] ?></td>
-            <td style="border-right: 1px solid black; text-align: center"><?php echo trim_text($row['paper_title'],15) ?></td>
-            <td style="border-right: 1px solid black; text-align: center"><?php echo $row['year'] ?></td>
+             
+            <th>TITLE</th>
+            <th>YEAR</th>
+            <!--<th>Bronze</th>-->
           </tr>
-        <?php endforeach; ?>
+        </thead>
+        <tbody>
+          <?php foreach ($rows as $row) : ?>
+          <tr>
+             
+            <td><?php echo trim_text($row['paper_title'],38) ?></td>
+            <td class="centered"><?php echo $row['year'] ?></td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
       </table>
     </div>
     <?php
