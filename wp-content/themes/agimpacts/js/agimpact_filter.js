@@ -247,7 +247,7 @@ $(document).ready(function() {
       data: "submit=&scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val() + "&option=" + 11,
       success: function(datos) {
         $('#results').append(datos);
-        $("#resulttable").tablesorter({theme: 'green'});
+//        $("#resulttable").tablesorter({theme: 'green'});
       },
       complete: function() {
         $("#loading").fadeOut('slow');

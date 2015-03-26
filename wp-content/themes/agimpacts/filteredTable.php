@@ -19,7 +19,7 @@
 require('../../../wp-load.php');
 //get_header('embed');
 global $wpdb;
-
+$type = $_REQUEST['type'];
 $crop = $_REQUEST['crop'];
 $model = $_REQUEST['model'];
 $climate = $_REQUEST['climate'];
@@ -67,35 +67,140 @@ if ($adaptation) {
   $where .= ") ";
 }
 
+if ($type == 'geochart' || $type == 'highmap' || $type == 'columnChart' || $type == 'scatterChart') {
+  $where .= " AND e.country <> '' AND e.country <> 'N/A' ";
+} else {
+  $where .= " AND e.latitude NOT IN ('','N/A') AND e.longitude NOT IN ('','N/A') ";
+}
+
 $sql1 = "SELECT e.latitude, e.longitude, e.idEstimate, "
         . " e.crop ,"
         . " a.doi_article,"
-        . " a.paper_title "
+        . " a.paper_title, "
+        . " e.country, "
+        . " e.yield_change, "
+        . " e.temp_change, "
+        . " c.iso_id "
         . " FROM wp_estimate e "
         . " INNER JOIN wp_article a ON e.article_id=a.id "
-        . " WHERE e.latitude NOT IN ('','N/A') AND e.longitude NOT IN ('','N/A') "
+        . " LEFT JOIN wp_country c ON c.name like CONCAT('%',e.country,'%') "
+        . " WHERE TRUE "
         . $where
         . " ORDER BY a.doi_article $limit";
 //  echo $sql1;
 $result = $wpdb->get_results($sql1, ARRAY_A);
 if (count($result) != 0) {
-  echo 'eqfeed_callback({ "type": "FeatureCollection",
+  if ($type == 'geochart') {
+//    echo "[";
+    $output = array();
+    $output[0][] = 'Country';
+    $output[0][] = 'DY';
+//      echo "['Country', 'DY'],";
+    for ($i = 0; $i < count($result); $i++) {
+      if ($result[$i]['country'] != '' && is_numeric($result[$i]['yield_change'])) {
+        $output[$i + 1][] = $result[$i]['country'];
+        $output[$i + 1][] = floatval($result[$i]['yield_change']);
+//          echo (array) "['".$result[$i]['country']."','".$result[$i]['yield_change']."'],";
+      }
+    }
+    echo json_encode($output);
+//    echo "]";
+  } else if ($type == 'highmap') {
+//    echo "[";
+    $stadData = array();
+    for ($i = 0; $i < count($result); $i++) {
+      if ($result[$i]['iso_id'] != '' && is_numeric($result[$i]['yield_change'])) {
+//        $stadData[$result[$i]['iso_id']]['code'] = $result[$i]['iso_id'];
+        $stadData[$result[$i]['iso_id']][] = floatval($result[$i]['yield_change']);
+//          echo (array) "['".$result[$i]['country']."','".$result[$i]['yield_change']."'],";
+      }
+    }
+    $output = array();
+    $i = 0;
+    foreach ($stadData as $key => $values) {
+      $output[0][$i]['code'] = $key;
+      $output[0][$i]['value'] = floatval(calculateMedian($values));
+      $output[0][$i]['median'] = floatval(calculateMedian($values));
+      $output[0][$i]['mean'] = floatval(mean($values));
+      $output[0][$i]['dev'] = floatval(stdDev($values));
+      $output[0][$i]['min'] = floatval(min($values));
+      $output[0][$i]['max'] = floatval(max($values));
+      $output[0][$i]['num'] = floatval(count($values));
+      
+      $output[1][$i]['code'] = $key;
+      $output[1][$i]['value'] = floatval(mean($values));
+      $output[1][$i]['median'] = floatval(calculateMedian($values));
+      $output[1][$i]['mean'] = floatval(mean($values));
+      $output[1][$i]['dev'] = floatval(stdDev($values));
+      $output[1][$i]['min'] = floatval(min($values));
+      $output[1][$i]['max'] = floatval(max($values));
+      $output[1][$i]['num'] = floatval(count($values));
+      $i++;
+    }
+    echo json_encode($output);
+//    echo "]";
+  } else if ($type == 'columnChart') {
+    if ($crop) {
+      $stadData = array();
+      for ($i = 0; $i < count($result); $i++) {
+        if ($result[$i]['country'] != '' && is_numeric($result[$i]['yield_change'])) {
+          $stadData[$result[$i]['country']][] = floatval($result[$i]['yield_change']);
+        }
+      }
+      $output = array();
+      $i = 0;
+      ksort($stadData);
+      foreach ($stadData as $key => $values) {
+        $output[0][$i][] = $key;
+        $output[0][$i][] = floatval(calculateMedian($values));
+        $output[1][] = array(nearestRank($values,5),nearestRank($values,95));
+        $i++;
+      }
+      echo json_encode($output);
+    } else {
+      echo "null";
+    }
+  } else if ($type == 'scatterChart') {
+//    if ($crop) {
+//      $stadData = array();
+      $output = array();
+      for ($i = 0; $i < count($result); $i++) {
+        if (is_numeric($result[$i]['temp_change']) && is_numeric($result[$i]['yield_change'])) {
+//          $stadData[$result[$i]['country']][] = floatval($result[$i]['yield_change']);
+          $output[] = array(floatval($result[$i]['temp_change']),floatval($result[$i]['yield_change']));
+        }
+      }
+      
+//      $i = 0;
+//      foreach ($stadData as $key => $values) {
+//        $output[0][$i][] = $key;
+//        $output[0][$i][] = floatval(calculateMedian($values));
+//        $output[1][] = array(nearestRank($values,5),nearestRank($values,95));
+//        $i++;
+//      }
+      echo json_encode($output);
+//    } else {
+//      echo "null";
+//    }
+  } else {
+    echo 'eqfeed_callback({ "type": "FeatureCollection",
           "features": [';
-  for ($i = 0; $i < count($result); $i++) {
-    if (is_numeric($result[$i]['latitude']) && is_numeric($result[$i]['longitude'])){
-    echo '
+    for ($i = 0; $i < count($result); $i++) {
+      if (is_numeric($result[$i]['latitude']) && is_numeric($result[$i]['longitude'])) {
+        echo '
              { "type": "Feature",
               "id": "' . $result[$i]['idEstimate'] . '",
               "geometry": {"type": "Point", "coordinates": [' . $result[$i]['latitude'] . ', ' . $result[$i]['longitude'] . ']},
               "properties": {
                  '
-          . '"crop":"' . $result[$i]['crop'] . '", '
-          . '"doi":"' . $result[$i]['doi_article'] . '"'
-          . '}
+        . '"crop":"' . $result[$i]['crop'] . '", '
+        . '"doi":"' . $result[$i]['doi_article'] . '"'
+        . '}
              }, 
             ';
+      }
     }
-  }
-  echo ']
+    echo ']
      });';
+  }
 }

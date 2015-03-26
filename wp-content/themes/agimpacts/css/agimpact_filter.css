@@ -27,3 +27,15 @@ table, td, th{
 	display: none;
 	padding: 0px 10px 10px 10px;
 }
+
+.clear-table td {
+  border: none !important;
+}
+
+.clear-table tr {
+  border: none !important;
+}
+
+.clear-table table {
+  border: none !important;
+}

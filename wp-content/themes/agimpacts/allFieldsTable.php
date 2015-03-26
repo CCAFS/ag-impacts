@@ -100,7 +100,6 @@ $result = "SELECT a.*,e.*,"
                         <th>Journal</th>
                         <th>Volume</th>
                         <th>Issue</th>
-                        
                         <th>Start Page</th>
                         <th>End Page</th>
                         <th>Reference</th>

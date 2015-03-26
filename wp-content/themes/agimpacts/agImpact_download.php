@@ -57,11 +57,10 @@ if ($adaptation != "null") {
 }
 
 
-$result = "SELECT a.id,e.idEstimate,a.doi_article,e.spatial_scale,e.crop,e.impact_models,"
+$result = "SELECT a.*,e.*,"
         . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
         . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
-        . " e.yield_change, CONCAT(e.region,' - ',e.country) as geograph_scope,"
-        . " e.temp_change,e.climate_scenario "
+        . " CONCAT(e.region,' - ',e.country) as geograph_scope "
         . " FROM wp_estimate e "
         . " INNER JOIN wp_article a ON e.article_id=a.id "
         . " WHERE 1 "
@@ -83,10 +82,10 @@ if (count($dataResult)) {
           ->setCategory("Crop_Estimate");
 
   $titleReport = "Crops Estimate";
-  $titleColumns = array('DOI', 'Spatial Scale', 'Crop', 'Multi-Model', 'Baseline Period', 'Projection Period', 'Percentage Yield Change', 'Geographical Scope', 'Local Mean Temperature Change', 'Climate Scenario');
+  $titleColumns = array('DOI', 'Author', 'Year', 'Journal', 'Volume', 'Issue', 'Start page', 'End page', 'Reference', 'Title', 'Crop','Scientific name',  'CO2 Projected', 'CO2 Baseline', 'Temp Change', 'Precipitation change', 'Yield Change', 'Projected yield change start', 'Projected yield change end', 'Adaptation', 'Climate scenario', '# GCM used', 'GCM(s)', '# Impact model used', 'Impact model(s)', 'Baseline start', 'Baseline end', 'Projection start', 'Projection end', 'Continent', 'Region', 'Country', 'State', 'City', 'Latitude', 'Longitude', 'Spatial scale', 'Comments', 'Contributor');
 
   $objPHPExcel->setActiveSheetIndex(0)
-          ->mergeCells('A1:J1');
+          ->mergeCells('A1:AM1');
 
   // Add the titles
   $objPHPExcel->setActiveSheetIndex(0)
@@ -100,22 +99,80 @@ if (count($dataResult)) {
           ->setCellValue('G3', $titleColumns[6])
           ->setCellValue('H3', $titleColumns[7])
           ->setCellValue('I3', $titleColumns[8])
-          ->setCellValue('J3', $titleColumns[9]);
+          ->setCellValue('J3', $titleColumns[9])
+          ->setCellValue('K3', $titleColumns[10])
+          ->setCellValue('L3', $titleColumns[11])
+          ->setCellValue('M3', $titleColumns[12])
+          ->setCellValue('N3', $titleColumns[13])
+          ->setCellValue('O3', $titleColumns[14])
+          ->setCellValue('P3', $titleColumns[15])
+          ->setCellValue('Q3', $titleColumns[16])
+          ->setCellValue('R3', $titleColumns[17])
+          ->setCellValue('S3', $titleColumns[18])
+          ->setCellValue('T3', $titleColumns[19])
+          ->setCellValue('U3', $titleColumns[20])
+          ->setCellValue('V3', $titleColumns[21])
+          ->setCellValue('W3', $titleColumns[22])
+          ->setCellValue('X3', $titleColumns[23])
+          ->setCellValue('Y3', $titleColumns[24])
+          ->setCellValue('Z3', $titleColumns[25])
+          ->setCellValue('AA3', $titleColumns[26])
+          ->setCellValue('AB3', $titleColumns[27])
+          ->setCellValue('AC3', $titleColumns[28])
+          ->setCellValue('AD3', $titleColumns[29])
+          ->setCellValue('AE3', $titleColumns[30])
+          ->setCellValue('AF3', $titleColumns[31])
+          ->setCellValue('AG3', $titleColumns[32])
+          ->setCellValue('AH3', $titleColumns[33])
+          ->setCellValue('AI3', $titleColumns[34])
+          ->setCellValue('AJ3', $titleColumns[35])
+          ->setCellValue('AK3', $titleColumns[36])
+          ->setCellValue('AL3', $titleColumns[37])
+          ->setCellValue('AM3', $titleColumns[38]);
 
   //Then add the data
   $i = 4;
   foreach ($dataResult as $row) {
     $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A' . $i, $row['doi_article'])
-            ->setCellValue('B' . $i, $row['spatial_scale'])
-            ->setCellValue('C' . $i, $row['crop'])
-            ->setCellValue('D' . $i, $row['impact_models'])
-            ->setCellValue('E' . $i, $row['baseline'])
-            ->setCellValue('F' . $i, $row['projection'])
-            ->setCellValue('G' . $i, $row['yield_change'])
-            ->setCellValue('H' . $i, $row['geograph_scope'])
-            ->setCellValue('I' . $i, $row['temp_change'])
-            ->setCellValue('J' . $i, $row['climate_scenario']);
+            ->setCellValue('B' . $i, $row['author'])
+            ->setCellValue('C' . $i, $row['year'])
+            ->setCellValue('D' . $i, $row['journal'])
+            ->setCellValue('E' . $i, $row['volume'])
+            ->setCellValue('F' . $i, $row['issue'])
+            ->setCellValue('G' . $i, $row['page_start'])
+            ->setCellValue('H' . $i, $row['page_end'])
+            ->setCellValue('I' . $i, $row['reference'])
+            ->setCellValue('J' . $i, $row['paper_title'])
+            ->setCellValue('K' . $i, $row['crop'])
+            ->setCellValue('L' . $i, $row['scientific_name'])
+            ->setCellValue('M' . $i, $row['projection_co2'])
+            ->setCellValue('N' . $i, $row['baseline_co2'])
+            ->setCellValue('O' . $i, $row['temp_change'])
+            ->setCellValue('P' . $i, $row['precipitation_change'])
+            ->setCellValue('Q' . $i, $row['yield_change'])
+            ->setCellValue('R' . $i, $row['projec_yield_change_start'])
+            ->setCellValue('S' . $i, $row['project_yield_change_end'])
+            ->setCellValue('T' . $i, $row['adaptation'])
+            ->setCellValue('U' . $i, $row['climate_scenario'])
+            ->setCellValue('V' . $i, $row['num_gcm_used'])
+            ->setCellValue('W' . $i, $row['gcm'])
+            ->setCellValue('X' . $i, $row['num_impact_model_used'])
+            ->setCellValue('Y' . $i, $row['impact_models'])
+            ->setCellValue('Z' . $i, $row['base_line_start'])
+            ->setCellValue('AA' . $i, $row['base_line_end'])
+            ->setCellValue('AB' . $i, $row['projection_start'])
+            ->setCellValue('AC' . $i, $row['projection_end'])
+            ->setCellValue('AD' . $i, $row['geo_scope'])
+            ->setCellValue('AE' . $i, $row['region'])
+            ->setCellValue('AF' . $i, $row['country'])
+            ->setCellValue('AG' . $i, $row['state'])
+            ->setCellValue('AH' . $i, $row['city'])
+            ->setCellValue('AI' . $i, $row['latitude'])
+            ->setCellValue('AJ' . $i, $row['longitude'])
+            ->setCellValue('AK' . $i, $row['spatial_scale'])
+            ->setCellValue('AL' . $i, $row['comments'])
+            ->setCellValue('AM' . $i, $row['contributor']);
     $i++;
   }
 
@@ -210,11 +267,11 @@ if (count($dataResult)) {
           )
   );
 
-  $objPHPExcel->getActiveSheet()->getStyle('A1:J1')->applyFromArray($titleStyle);
-  $objPHPExcel->getActiveSheet()->getStyle('A3:J3')->applyFromArray($columnStyle);
-  $objPHPExcel->getActiveSheet()->setSharedStyle($dataStyle, "A4:J" . ($i - 1));
+  $objPHPExcel->getActiveSheet()->getStyle('A1:AM1')->applyFromArray($titleStyle);
+  $objPHPExcel->getActiveSheet()->getStyle('A3:AM3')->applyFromArray($columnStyle);
+  $objPHPExcel->getActiveSheet()->setSharedStyle($dataStyle, "A4:AM" . ($i - 1));
 
-  for ($i = 'A'; $i <= 'J'; $i++) {
+  for ($i = 'A'; $i <= 'AM'; $i++) {
     $objPHPExcel->setActiveSheetIndex(0)
             ->getColumnDimension($i)->setAutoSize(TRUE);
   }

@@ -159,3 +159,50 @@ function trim_text($input, $length, $ellipses = true, $strip_html = true) {
     }
     return $trimmed_text;
 }
+
+/**
+ * Caculate de median of a set of numbers
+ * @param Array(number) $values sorted set of values
+ * @return number 
+ */
+function calculateMedian ($values) {
+  sort($values, SORT_NUMERIC);
+  $iCount = count($values);
+  $middle_index = floor($iCount / 2);
+  if ($iCount % 2 == 0) {
+    return ($values[$middle_index] + $values[$middle_index-1])/2;
+  } else {
+    return $values[$middle_index];
+  }
+}
+
+function mean ($values) {
+    $num_args = count ($values);
+    $sum = 0;
+    foreach ($values as $value) {
+        $sum += $value;
+    }
+    return $sum / $num_args;
+}
+
+function stdDev ($values) {
+    $num_args = count ($values);
+    $sum = 0;
+    foreach ($values as $value) {
+        $sum += $value;
+    }
+    
+    $mean = $sum / $num_args;
+    $sum = 0;
+    foreach ($values as $value) {
+      $sum += pow(($value - $mean),2);
+    }
+    return sqrt($sum / $num_args);
+}
+
+function nearestRank ($values, $percent) {
+  sort($values, SORT_NUMERIC);
+  $iCount = count($values);
+  $index = ceil(($percent * $iCount)/100) -1;
+  return $values[$index];
+}
