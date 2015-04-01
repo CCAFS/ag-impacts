@@ -258,6 +258,9 @@ $(document).ready(function() {
   $("#reset").on("click", function() {
     $('.js-data-ajax').val(null).trigger("change");
   });
+  
+  $("#loading").fadeOut('slow');
+  
 });
 
 function downloadData() {
@@ -276,6 +279,6 @@ function viewAllFields() {
 }
 
 function viewAllFieldsh() {
-  window.open(templateUrl + "/fullview/?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=10, left=10, width=400, height=400");
+  window.open(templateUrl + "/fullview/?scale=" + $('#scale').val() + "&crop=" + $('#crop').val() + "&model=" + $('#model').val() + "&baseline=" + $('#baseline').val() + "&period=" + $('#period').val() + "&country=" + $('#country').val() + "&subcontinents=" + $('#continents').val() + "&climate=" + $('#climate').val() + "&adaptation=" + $('#adaptation').val(), "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=10, left=10, width=1120, height=600");
 //  window.close();
 }

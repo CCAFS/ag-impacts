@@ -67,7 +67,7 @@ if ($adaptation) {
   $where .= ") ";
 }
 
-if ($type == 'geochart' || $type == 'highmap' || $type == 'columnChart' || $type == 'scatterChart') {
+if ($type != '') {
   $where .= " AND e.country <> '' AND e.country <> 'N/A' ";
 } else {
   $where .= " AND e.latitude NOT IN ('','N/A') AND e.longitude NOT IN ('','N/A') ";
@@ -126,7 +126,7 @@ if (count($result) != 0) {
       $output[0][$i]['min'] = floatval(min($values));
       $output[0][$i]['max'] = floatval(max($values));
       $output[0][$i]['num'] = floatval(count($values));
-      
+
       $output[1][$i]['code'] = $key;
       $output[1][$i]['value'] = floatval(mean($values));
       $output[1][$i]['median'] = floatval(calculateMedian($values));
@@ -138,7 +138,6 @@ if (count($result) != 0) {
       $i++;
     }
     echo json_encode($output);
-//    echo "]";
   } else if ($type == 'columnChart') {
     if ($crop) {
       $stadData = array();
@@ -147,13 +146,20 @@ if (count($result) != 0) {
           $stadData[$result[$i]['country']][] = floatval($result[$i]['yield_change']);
         }
       }
+
+      uasort($stadData, function ($a, $b) {
+        return (count($b) - count($a));
+      });
+
       $output = array();
       $i = 0;
-      ksort($stadData);
       foreach ($stadData as $key => $values) {
         $output[0][$i][] = $key;
         $output[0][$i][] = floatval(calculateMedian($values));
-        $output[1][] = array(nearestRank($values,5),nearestRank($values,95));
+//        $output[0][$i][] = count($values);
+        $output[1][] = array(nearestRank($values, 5), nearestRank($values, 95));
+        if ($i == 9)
+          break;
         $i++;
       }
       echo json_encode($output);
@@ -161,27 +167,29 @@ if (count($result) != 0) {
       echo "null";
     }
   } else if ($type == 'scatterChart') {
-//    if ($crop) {
-//      $stadData = array();
-      $output = array();
-      for ($i = 0; $i < count($result); $i++) {
-        if (is_numeric($result[$i]['temp_change']) && is_numeric($result[$i]['yield_change'])) {
-//          $stadData[$result[$i]['country']][] = floatval($result[$i]['yield_change']);
-          $output[] = array(floatval($result[$i]['temp_change']),floatval($result[$i]['yield_change']));
-        }
+    $stadData = array();
+    $output = array();
+    for ($i = 0; $i < count($result); $i++) {
+      if (is_numeric($result[$i]['temp_change']) && is_numeric($result[$i]['yield_change'])) {
+        $stadData[$result[$i]['temp_change']][] = floatval($result[$i]['yield_change']);
+        $output[0][] = array(floatval($result[$i]['temp_change']), floatval($result[$i]['yield_change']));
       }
-      
-//      $i = 0;
-//      foreach ($stadData as $key => $values) {
-//        $output[0][$i][] = $key;
-//        $output[0][$i][] = floatval(calculateMedian($values));
-//        $output[1][] = array(nearestRank($values,5),nearestRank($values,95));
-//        $i++;
-//      }
+    }
+//    echo "<pre>".print_r($stadData,true)."</pre>";
+    if (count($output[0]) < 25 || count($stadData) < 4) {
+      echo 'null';
+    } else {
+      $i = 1;
+      $amean = 0;
+      ksort($stadData);
+      foreach ($stadData as $key => $values) {
+        $mean = (mean($values) + $amean) / $i;
+        $output[1][] = array(floatval($key), $mean);
+        $amean += $mean;
+        $i++;
+      }
       echo json_encode($output);
-//    } else {
-//      echo "null";
-//    }
+    }
   } else {
     echo 'eqfeed_callback({ "type": "FeatureCollection",
           "features": [';
@@ -203,4 +211,6 @@ if (count($result) != 0) {
     echo ']
      });';
   }
+} else {
+  echo "null";
 }

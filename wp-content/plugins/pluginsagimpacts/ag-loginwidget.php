@@ -117,7 +117,7 @@ class PCLoginWidget extends WP_Widget {
             valid = valid && checkLength(email, "Email", 6, 80);
             valid = valid && checkLength(password, "Password", 5, 16);
             valid = valid && checkPass(password, repassword, "Valid your password");
-//            valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+      //            valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
             valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
             valid = valid && checkRegexp(password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
 
@@ -133,12 +133,12 @@ class PCLoginWidget extends WP_Widget {
                       timeout: 6000,
                       text: result
                     });
-                  } else {                   
+                  } else {
                     location.reload();
                   }
                 },
                 complete: function() {
-                  
+
                 }
               });
               //              document.getElementById("newuserform").submit();
@@ -171,39 +171,41 @@ class PCLoginWidget extends WP_Widget {
           });
         });
       </script>
-      <form action="<?php echo bloginfo('url') . '/wp-login.php'; ?>" method="post" class="pure-form">
-        <button type="button" id="btn-signup" class="pure-button button-small" onclick="dialog.dialog('open')">Sign up</button>
-        - 
-        <input type="text" name="log" placeholder="Username" />
-        <input type="password" name="pwd" placeholder="Password" />
-        <button type="submit" id="btn-login" class="pure-button button-small"> Log in</button>
-        <a style="font-weight: bold" href="<?php echo bloginfo('url') . '/wp-login.php'; ?>/wp-login.php?action=lostpassword">Lost your password?</a>
-      </form>
-      <div id="dialog-form" title="Create new user">
-        <p class="validateTips">All form fields are required.</p>
-
-        <form id="newuserform" name="newuserform" method="post">
-          <fieldset>
-            <label for="name">Username</label>
-            <input type="text" name="reguser" id="reguser" value="" class="text ui-widget-content ui-corner-all">
-            <label for="email">Email</label>
-            <input type="text" name="regemail" id="regemail" value="" class="text ui-widget-content ui-corner-all">
-            <label for="name">Institution</label>
-            <input type="text" name="reginstitution" id="reginstitution" class="text ui-widget-content ui-corner-all">
-            <label for="name">First Name</label>
-            <input type="text" name="regname" id="regname" class="text ui-widget-content ui-corner-all">
-            <label for="name">Last Name</label>
-            <input type="text" name="reglastname" id="reglastname" class="text ui-widget-content ui-corner-all">
-            <label for="password">Password</label>
-            <input type="password" name="regpwd" id="regpwd" value="" class="text ui-widget-content ui-corner-all">
-            <label for="password">Repeat Password</label>
-            <input type="password" name="regrepwd" id="regrepwd" class="text ui-widget-content ui-corner-all">
-            <!--<label><input type="checkbox" name="agree"> I agree terms of use and privacy </label>-->
-            <input type="hidden" name="register" value="1">
-            <!-- Allow form submission with keyboard without duplicating the dialog button -->
-            <!--<input type="submit" value="Aceptar">-->
-          </fieldset>
+      <div id='log-pplug' >
+        <form action="<?php echo bloginfo('url') . '/wp-login.php'; ?>" method="post" class="pure-form">
+          <button type="button" id="btn-signup" class="pure-button button-small" onclick="dialog.dialog('open');$('#dialog-form').show()">Sign up</button>
+          - 
+          <input type="text" name="log" placeholder="Username" />
+          <input type="password" name="pwd" placeholder="Password" />
+          <button type="submit" id="btn-login" class="pure-button button-small"> Log in</button>
+          <a style="font-weight: bold" href="<?php echo bloginfo('url') . '/wp-login.php'; ?>/wp-login.php?action=lostpassword">Lost your password?</a>
         </form>
+        <div id="dialog-form" title="Create new user" style="display:none">
+          <p class="validateTips">All form fields are required.</p>
+
+          <form id="newuserform" name="newuserform" method="post">
+            <fieldset>
+              <label for="name">Username</label>
+              <input type="text" name="reguser" id="reguser" value="" class="text ui-widget-content ui-corner-all">
+              <label for="email">Email</label>
+              <input type="text" name="regemail" id="regemail" value="" class="text ui-widget-content ui-corner-all">
+              <label for="name">Institution</label>
+              <input type="text" name="reginstitution" id="reginstitution" class="text ui-widget-content ui-corner-all">
+              <label for="name">First Name</label>
+              <input type="text" name="regname" id="regname" class="text ui-widget-content ui-corner-all">
+              <label for="name">Last Name</label>
+              <input type="text" name="reglastname" id="reglastname" class="text ui-widget-content ui-corner-all">
+              <label for="password">Password</label>
+              <input type="password" name="regpwd" id="regpwd" value="" class="text ui-widget-content ui-corner-all">
+              <label for="password">Repeat Password</label>
+              <input type="password" name="regrepwd" id="regrepwd" class="text ui-widget-content ui-corner-all">
+              <!--<label><input type="checkbox" name="agree"> I agree terms of use and privacy </label>-->
+              <input type="hidden" name="register" value="1">
+              <!-- Allow form submission with keyboard without duplicating the dialog button -->
+              <!--<input type="submit" value="Aceptar">-->
+            </fieldset>
+          </form>
+        </div>
       </div>
       <?php
     else:

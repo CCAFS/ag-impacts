@@ -24,7 +24,7 @@ if (isset($_REQUEST['custom'])) {
   require('../../../wp-load.php');
   ?><script src="<?php echo get_template_directory_uri(); ?>/js/jquery-1.11.1.min.js"></script><?php
 } else {
-  get_header();
+  get_header('logo');
 }
 global $wpdb;
 $version = '1.1';
@@ -151,16 +151,16 @@ $result = "SELECT a.*,e.*,"
         url: '".get_bloginfo("url")."/wp-content/themes/agimpacts/dataTableFilter.php',
         type: 'POST',
         data: function(d) {
-          d.crop = ".$_REQUEST['crop'].";
-          d.model = ".$_REQUEST['model'].";
-          d.scale = ".$_REQUEST['scale'].";
-          d.climate = ".$_REQUEST['climate'].";
-          d.baseline = ".$_REQUEST['baseline'].";
-          d.period = ".$_REQUEST['period'].";
-          d.country = ".$_REQUEST['country'].";
+          d.crop = '".$_REQUEST['crop']."';
+          d.model = '".$_REQUEST['model']."';
+          d.scale = '".$_REQUEST['scale']."';
+          d.climate = '".$_REQUEST['climate']."';
+          d.baseline = '".$_REQUEST['baseline']."';
+          d.period = '".$_REQUEST['period']."';
+          d.country = '".$_REQUEST['country']."';
           d.allfields = true;
-          d.subcontinents = ".$_REQUEST['subcontinents'].";
-          d.adaptation = ".$_REQUEST['adaptation'].";
+          d.subcontinents = '".$_REQUEST['subcontinents']."';
+          d.adaptation = '".$_REQUEST['adaptation']."';
         }
       }
     });

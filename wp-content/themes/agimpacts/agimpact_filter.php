@@ -17,7 +17,7 @@ $version = '1.1';
 <script type="text/javascript" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
-<div id="loading" style="z-index:9999"><img style="" src="<?php echo get_template_directory_uri(); ?>/img/loading.gif" alt="Loader" /></div>
+<div id="loading" style="z-index:9999;display: block"><img style="" src="<?php echo get_template_directory_uri(); ?>/img/loading.gif" alt="Loader" /></div>
 <section id="content" class="row"> 
 
   <form id="filtersh" class="pure-form pure-form-aligned" style="background: #e2e2e2; padding: 20px;">
@@ -227,14 +227,14 @@ $version = '1.1';
   </div>
 </p>
 <br>
-<h3 id="map_title_chart" name="map_title" style="display: none">Column Chart</h3>
+<!--<h3 id="map_title_chart" name="map_title" style="display: none">Column Chart</h3>-->
 <div style="width:1020px;height:600px;display: none" id="column-chart"></div>
 <br>
 <!--<h3 id="map_title" name="map_title">Map view</h3>
 <div style="width:1020px;height:600px;" id="map-canvas"></div>
 <br>-->
-<h3 id="map_title" name="map_title">Map geochart</h3>
-<div id="mapBox">
+<!--<h3 id="map_title" name="map_title">Map geochart</h3>-->
+<div id="mapBox" style="display: none">
   <div class="selector">
     <!--<button id="btn-prev-map" class="prev-next"><i class="fa fa-angle-left"></i></button>-->
     <select id="mapDropdown" class="ui-widget combobox">
@@ -246,7 +246,7 @@ $version = '1.1';
   <div style="width:1020px;height:600px;" id="map-geochart"></div> 
 </div>
 <br>
-<h3 id="scatter_title" name="scatter_title" style="display: none">Scatter Chart</h3>
+<!--<h3 id="scatter_title" name="scatter_title" style="display: none">Scatter Chart</h3>-->
 <div style="width:1020px;height:600px;display: none" id="scatter-chart"></div>
 <br>
 </section>
@@ -268,7 +268,7 @@ $version = '1.1';
 //  }
 //
 //  window.eqfeed_callback = function(results) {
-////    var image = "<?php // bloginfo('template_directory');                                 ?>/images/ccafs_sites-miniH.png";
+////    var image = "<?php // bloginfo('template_directory');                                     ?>/images/ccafs_sites-miniH.png";
 //    var infobox;
 //    var markeri = new google.maps.Marker();
 //    $("#map_title").append("<bold> (" + results.features.length + " estimates on the map)</bold>");
@@ -299,7 +299,7 @@ $version = '1.1';
 //          google.maps.event.addListener(infobox, "closeclick", function() {
 //            markeri.setMap(null);
 //          });
-////          var imagei = "<?php // bloginfo('template_directory');                                 ?>/images/ccafs_sites-miniI.png";
+////          var imagei = "<?php // bloginfo('template_directory');                                     ?>/images/ccafs_sites-miniI.png";
 //          var coords = results.features[i].geometry.coordinates;
 //          var latLng = new google.maps.LatLng(coords[1], coords[0]);
 //          markeri = new google.maps.Marker({
@@ -429,23 +429,24 @@ $version = '1.1';
       var $selectedItem = $("option:selected", this),
               mapDesc = $selectedItem.text(),
               mapKey = this.value;
-      minColor = '#EFEFFF', maxColor = '#102D4C';
+      minColor = '#F75945', maxColor = '#102D4C';
       if (mapKey == 1) {
         //        minColor = '#990041',
-        maxColor = '#990041';
+//        maxColor = '#990041';
       }
 
       $.ajax({
-        url: templateUrl + "/wp-content/themes/agimpacts/filteredTable.php?type=highmap&key=" + mapKey,
+        url: templateUrl + "/wp-content/themes/agimpacts/filteredTable.php?type=highmap",
         type: "POST",
         data: $('#filtersh').serialize(),
         success: function(result) {
-          if (!result) {
+          if (result == 'null') {
             var objJSON = [
               ['Country', 'DY'],
             ];
           } else {
             var objJSON = eval("(function(){return " + result + ";})()");
+            $('#mapBox').show();
           }
           var data = objJSON;
           $('#map-geochart').highcharts('Map', {
@@ -455,49 +456,67 @@ $version = '1.1';
             colors: ['rgba(19,64,117,0.05)', 'rgba(19,64,117,0.2)', 'rgba(19,64,117,0.4)',
               'rgba(19,64,117,0.5)', 'rgba(19,64,117,0.6)', 'rgba(19,64,117,0.8)', 'rgba(19,64,117,1)'],
             title: {
-              text: 'Yield Change by country (%)'
+              text: 'Projected yield change by country'
             },
             mapNavigation: {
               enabled: true
             },
             legend: {
               title: {
-                text: mapDesc + ' value',
+                text: mapDesc + ' projected yield change (%)',
                 style: {
                   color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
                 }
-              }
+              },
+//              align: 'left',
+//              verticalAlign: 'bottom',
+//              floating: true,
+//              layout: 'vertical',
+//              valueDecimals: 0
             },
             colorAxis: {
-              minColor: minColor,
-              maxColor: maxColor
-//            dataClasses: [{
-//                to: -45,
-//                name: " < (-45)"
-//              }, {
-//                from: -45,
-//                to: -25,
-//                name: "(-45) to (-25)"
-//              }, {
-//                from: -25,
-//                to: -15,
-//                name: "(-25) to (-15)"
-//              }, {
-//                from: -15,
-//                to: 0,
-//                name: "(-15) to 0"
-//              }, {
-//                from: 0,
-//                to: 15
-//              }, {
-//                from: 15,
-//                to: 25
-//              }, {
-//                from: 25,
-//                to: 45
-                      //              }, {
-                      //                from: 45
-                      //              }]
+//              minColor: '#313695',
+//              maxColor: '#a50026',
+              min: -100,
+              max: 100,
+              stops: [
+                [0, '#a50026'],
+                [0.5, '#e7f5ea'],
+                [0.9, '#313695']
+            ]
+//              dataClasses: [{
+//                  from: 75,
+//                  to: 100,
+//                  color: '#313695'
+//                }, {
+//                  from: 50,
+//                  to: 75,
+//                  color: '#588cc0'
+//                }, {
+//                  from: 25,
+//                  to: 50,
+//                  color: '#a1d1e4'
+//                }, {
+//                  from: 0,
+//                  to: 25,
+//                  color: '#e7f5ea'
+//                }, {
+//                  from: -25,
+//                  to: 0,
+//                  color: '#fee79b'
+//                }, {
+//                  from: -50,
+//                  to: -25,
+//                  color: '#fba25b'
+//                }, {
+//                  from: -75,
+//                  to: -50,
+//                  color: '#e34932'
+//                }, {
+//                  from: -100,
+//                  to: -75,
+//                  color: '#a50026'
+//                }]
             },
             series: [{
                 name: 'median',
@@ -505,7 +524,7 @@ $version = '1.1';
                 mapData: Highcharts.geojson(Highcharts.maps['custom/world']),
                 joinBy: ['iso-a2', 'code'],
                 animation: true,
-                name: 'Yield Change',
+                name: 'Projected yield change',
                         states: {
                           hover: {
                             color: '#BADA55'
@@ -514,14 +533,13 @@ $version = '1.1';
                 tooltip: {
                   //                valueSuffix: '%',
                   useHTML: true,
-                  pointFormat: '<span style="font-weight: bold;">{point.name}</span><br><span style="font-weight: bold;">Median</span>: {point.median:.1f} ± {point.dev:.1f}%<br><span style="font-weight: bold;">Mean</span>: {point.mean:.1f} %<br><span style="font-weight: bold;">Range</span>: [{point.min:.1f}, {point.max:.1f}]<br><span style="font-weight: bold;">N. of stimates</span>: {point.num:.1f}'
+                  headerFormat: '<span style="font-weight: bold;">{point.key}</span><br/>',
+                  pointFormat: '<span style="font-weight: bold;">Median</span>: {point.median:.1f} ± {point.dev:.1f}%<br><span style="font-weight: bold;">Mean</span>: {point.mean:.1f} %<br><span style="font-weight: bold;">Range</span>: [{point.min:.1f}, {point.max:.1f}]<br><span style="font-weight: bold;">N. of stimates</span>: {point.num}'
                 }
               }]
           });
         },
         complete: function() {
-          //        $("#loading").fadeOut('slow');
-          //      $("#result").show();
         }
       })
     });
@@ -536,7 +554,6 @@ $version = '1.1';
         } else {
           var objJSON = eval("(function(){return " + result + ";})()");
           $('#column-chart').show();
-          $('#map_title_chart').show();
         }
         var data = objJSON;
         $('#column-chart').highcharts({
@@ -544,13 +561,13 @@ $version = '1.1';
             zoomType: 'xy'
           },
           title: {
-            text: 'Yield by crop'
+            text: 'Projected yield change by country'
           },
           tooltip: {
             shared: true
           }, yAxis: {// Secondary yAxis
             title: {
-              text: 'Yield change',
+              text: 'Yield change (%)',
               style: {
                 //                color: Highcharts.getOptions().colors[0]
               }
@@ -617,32 +634,47 @@ $version = '1.1';
         } else {
           var objJSON = eval("(function(){return " + result + ";})()");
           $('#scatter-chart').show();
-          $('#scatter_title').show();
         }
         var data = objJSON;
         $('#scatter-chart').highcharts({
           xAxis: {
             title: {
-              text: 'ΔTemperature(C°)'
+              text: 'ΔTemperature change(C°)'
             }
-            //            min: -0.5,
-            //            max: 5.5
           },
           yAxis: {
             title: {
-              text: 'ΔYield'
+              text: 'ΔYield change (%)'
             }
-//            min: 0
+          },
+          tooltip: {
+            shared: true
           },
           title: {
-            text: 'Scatter plot'
+            text: 'Yield response by Temperature change'
           },
           series: [{
               type: 'scatter',
               name: 'Temperature',
-              data: data,
+              data: data[0],
+              tooltip: {
+                pointFormat: 'Temperature: {point.x:.1f}C° <br/>Yield: {point.y:.1f}%<br/>'
+              },
               marker: {
                 radius: 4
+              }
+            }, {
+              type: 'spline',
+              name: 'Moving average',
+              data: data[1],
+              tooltip: {
+                headerFormat: '',
+                pointFormat: 'Yield moving average: {point.y:.2f}%<br/>'
+              },
+              marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
               }
             }]
         });

@@ -33,36 +33,36 @@ $regions = $_REQUEST['regions'];
 $adaptation = $_REQUEST['adaptation'];
 $where = "  ";
 
-if ($crop != "") {
+if ($crop != "" && $crop != 'null') {
   $where = $where . " AND e.crop = '" . $crop . "' ";
 }
-if ($model) {
+if ($model!= 'null' && $model!= '') {
   $where = $where . " AND e.impact_models = '" . $model . "' ";
 }
-if ($climate) {
+if ($climate!= 'null' && $climate!= '') {
   $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
 }
-if ($baseline) {
+if ($baseline!= 'null' && $baseline!= '') {
   $baselinearray[] = explode(" - ", $baseline);
   $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
 }
-if ($period != '') {
+if ($period != '' && $period != 'null') {
   $periodarray[] = explode(" - ", $period);
   $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
 }
-if ($scale) {
+if ($scale!= 'null' && $scale!= '') {
   $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
 }
-if ($country) {
+if ($country != 'null' && $country != '') {
   $where = $where . " AND e.country = '" . $country . "' ";
 }
-elseif ($continents) {
+elseif ($continents!= 'null' && $continents!= '') {
   $where = $where . " AND e.geo_scope = '" . $continents . "' ";
 }
-elseif ($regions) {
+elseif ($regions!= 'null' && $regions!= '') {
   $where = $where . " AND e.region = '" . $regions . "' ";
 }
-if ($adaptation) {
+if ($adaptation != 'null' && $adaptation != '') {
 //  $adaptation = explode(',', $adaptation);
   $where .= " AND (";
   foreach ($adaptation as $val) {
