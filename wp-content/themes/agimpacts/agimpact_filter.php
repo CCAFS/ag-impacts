@@ -6,7 +6,7 @@
  */
 //require('../../../../wp-load.php');
 get_header();
-$version = '1.1';
+$version = '1.2';
 ?>
 <script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false'></script>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.css?<?php echo $version; ?>">

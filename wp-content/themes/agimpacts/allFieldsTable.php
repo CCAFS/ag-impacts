@@ -45,48 +45,48 @@ $scale = $_REQUEST['scale'];
 $country = $_REQUEST['country'];
 $subcontinents = $_REQUEST['subcontinents'];
 $adaptation = $_REQUEST['adaptation'];
-$where = "  ";
-
-if ($crop != "null") {
-  $where = $where . " AND e.crop = '" . $crop . "' ";
-}
-if ($model != "null") {
-  $where = $where . " AND e.impact_models = '" . $model . "' ";
-}
-if ($climate != "null") {
-  $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
-}
-if ($baseline != "null") {
-  $baselinearray[] = explode(" - ", $baseline);
-  $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
-}
-if ($period != "null") {
-  $periodarray[] = explode(" - ", $period);
-  $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
-}
-if ($scale != "null") {
-  $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
-}
-if ($subcontinents != "null") {
-  $where = $where . " AND e.region = '" . $subcontinents . "' ";
-}
-if ($country != "null") {
-  $where = $where . " AND e.country = '" . $country . "' ";
-}
-if ($adaptation != "null") {
-  $where = $where . " AND e.adaptation = '" . $adaptation . "' ";
-}
-
-
-$result = "SELECT a.*,e.*,"
-        . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
-        . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
-        . " CONCAT(e.region,' - ',e.country) as geograph_scope "
-        . " FROM wp_estimate e "
-        . " INNER JOIN wp_article a ON e.article_id=a.id "
-        . " WHERE 1 "
-        . $where
-        . " ORDER BY a.id ";
+//$where = "  ";
+//
+//if ($crop != "null") {
+//  $where = $where . " AND e.crop = '" . $crop . "' ";
+//}
+//if ($model != "null") {
+//  $where = $where . " AND e.impact_models = '" . $model . "' ";
+//}
+//if ($climate != "null") {
+//  $where = $where . " AND e.climate_scenario = '" . $climate . "' ";
+//}
+//if ($baseline != "null") {
+//  $baselinearray[] = explode(" - ", $baseline);
+//  $where = $where . " AND e.base_line_start = '" . $baselinearray[0][0] . "' AND e.base_line_end = '" . $baselinearray[0][1] . "' ";
+//}
+//if ($period != "null") {
+//  $periodarray[] = explode(" - ", $period);
+//  $where = $where . " AND e.projection_start = '" . $periodarray[0][0] . "' AND e.projection_end='" . $periodarray[0][1] . "' ";
+//}
+//if ($scale != "null") {
+//  $where = $where . " AND e.spatial_scale = '" . $scale . "' ";
+//}
+//if ($subcontinents != "null") {
+//  $where = $where . " AND e.region = '" . $subcontinents . "' ";
+//}
+//if ($country != "null") {
+//  $where = $where . " AND e.country = '" . $country . "' ";
+//}
+//if ($adaptation != "null") {
+//  $where = $where . " AND e.adaptation = '" . $adaptation . "' ";
+//}
+//
+//
+//$result = "SELECT a.*,e.*,"
+//        . " CONCAT(e.base_line_start,' - ',e.base_line_end) as baseline,"
+//        . " CONCAT(e.projection_start,' - ',e.projection_end) as projection,"
+//        . " CONCAT(e.region,' - ',e.country) as geograph_scope "
+//        . " FROM wp_estimate e "
+//        . " INNER JOIN wp_article a ON e.article_id=a.id "
+//        . " WHERE 1 "
+//        . $where
+//        . " ORDER BY a.id ";
 //echo $result; exit();
 //$dataResult = $wpdb->get_results($result, ARRAY_A);
 //if (count($dataResult)) {

@@ -34,6 +34,9 @@ if (!isset($myestimates) || is_null($myestimates)) {
   <input type='hidden' id='estimate_id' value='<?php echo $estimate['ID'] ?>'>
   <?php
 }
+if (!isset($articleId)) {
+  $articleId = $_GET["article_id"];
+}
 //echo "<pre>$articleId".print_r($current_estimate,true)."</pre>";
 ?>
 <div id="contentEstimate<?php echo $id; ?>">
@@ -149,7 +152,7 @@ if (!isset($myestimates) || is_null($myestimates)) {
         <input id="longitude" name="longitude" type="text" class="pure-input-1-3" placeholder="Longitude" value="<?php echo (isset($current_estimate['longitude'])) ? $current_estimate['longitude'] : ''; ?>">
       </div>
       <div style="height: 45px" class="pure-control-group">
-        <label for="adaptation">Adaptation Column <?php echo $current_estimate['adaptation'] ?></label>
+        <label for="adaptation">Adaptation Column <?php // echo $current_estimate['adaptation'] ?></label>
         <!--<input type="hidden" name="adaptation" id="adaptation" class="input-xlarge" style="width:350px;" data-placeholder="Choose An Option.." />-->
         <select class="js-data-ajax" style="width: 300px;box-shadow: none!important;" name="adaptation[]" id="adaptation" multiple="multiple">
           <?php
@@ -168,7 +171,7 @@ if (!isset($myestimates) || is_null($myestimates)) {
   <hr>
   <script>
     $(document).ready(function() {
-      $("#adaptation").select2();
+      $("#adaptation", "#estimateForm<?php echo $id; ?>").select2();
       $("#estimateForm<?php echo $id; ?>").on('submit', function(e) {
         var form = $(this);//this refers to the form
 //      alert(form.serialize());

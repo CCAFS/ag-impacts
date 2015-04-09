@@ -68,9 +68,8 @@ if ($_GET['article']) {
       <button type="button" class="pure-button pure-button-primary" onclick="$(location).attr('href',templateUrl+'/article');">Back</button>
     </div>
     <h1>Estimate data</h1>
-
+    <hr>
     <div id="estimateDiv">
-      <hr>
       <?php
       if (is_null($myestimates) || !$myestimates) {
         include(locate_template('estimateForm.php'));
