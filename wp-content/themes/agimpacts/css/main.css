@@ -6,6 +6,7 @@ header {
   height: 170px;
   background-repeat: repeat-x;
   background-image: url(../img/bg.png);
+  background-color: #2AE8FF;
 }
 
 nav{
@@ -416,7 +417,7 @@ button#btn-login {
 }
 
 .statistic-ag table thead {
-background: #00A261;
+background: #8ea786;
 color: #FFF;
 text-align: left;
 vertical-align: bottom;
