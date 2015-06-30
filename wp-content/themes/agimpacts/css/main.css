@@ -22,6 +22,7 @@ nav ul li{
   height: 25px;
   padding: 8px 0;
   border-left: solid 1px #E4E4E4;
+  list-style: none;
 }
 
 nav ul li:last-child {
@@ -435,4 +436,12 @@ vertical-align: bottom;
 
 .statistic-ag-table table, th{
   border-bottom: 1px solid black;
+}
+
+.ag-menu {
+  color: #FFF!important;
+}
+
+.ag-menu:hover {
+  color: #000!important;
 }

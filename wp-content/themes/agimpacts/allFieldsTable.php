@@ -90,7 +90,7 @@ $adaptation = $_REQUEST['adaptation'];
 //echo $result; exit();
 //$dataResult = $wpdb->get_results($result, ARRAY_A);
 //if (count($dataResult)) {
-  echo "
+  ?>
 	<section id='content' class='row'><table id='resulttable' name='resulttable' class='display' style=''>
 	<thead>
 		<tr>
@@ -137,9 +137,9 @@ $adaptation = $_REQUEST['adaptation'];
 		</tr>
 	</thead>
 	<tbody>
-        </table></section>";
-  echo "<script language='javascript'>"
-  . "$(document).ready(function() {
+        </table></section>;
+  <script language='javascript'>
+    $(document).ready(function() {
     $('#resulttable').dataTable({
       'scrollX': true,
       'scrollY': 400,
@@ -148,27 +148,21 @@ $adaptation = $_REQUEST['adaptation'];
       'serverSide': true,
       'searching': false,
       'ajax': {
-        url: '".get_bloginfo("url")."/wp-content/themes/agimpacts/dataTableFilter.php',
+        url: '<?php echo get_template_directory_uri();?>/dataTableFilter.php',
         type: 'POST',
         data: function(d) {
-          d.crop = '".$_REQUEST['crop']."';
-          d.model = '".$_REQUEST['model']."';
-          d.scale = '".$_REQUEST['scale']."';
-          d.climate = '".$_REQUEST['climate']."';
-          d.baseline = '".$_REQUEST['baseline']."';
-          d.period = '".$_REQUEST['period']."';
-          d.country = '".$_REQUEST['country']."';
+          d.crop = '<?php echo $_REQUEST['crop']?>';
+          d.model = '<?php echo$_REQUEST['model']?>';
+          d.scale = '<?php echo$_REQUEST['scale']?>';
+          d.climate = '<?php echo$_REQUEST['climate']?>';
+          d.baseline = '<?php echo$_REQUEST['baseline']?>';
+          d.period = '<?php echo$_REQUEST['period']?>';
+          d.country = '<?php echo$_REQUEST['country']?>';
           d.allfields = true;
-          d.subcontinents = '".$_REQUEST['subcontinents']."';
-          d.adaptation = '".$_REQUEST['adaptation']."';
+          d.subcontinents = '<?php echo$_REQUEST['subcontinents']?>';
+          d.adaptation = '<?php echo$_REQUEST['adaptation']?>';
         }
       }
     });
-  });"
-  . "</script>";
-//} else {
-//  echo "<script language='javascript'>alert('No Data Found');</script>";
-//}
-
-
-  
+  });
+  </script>  

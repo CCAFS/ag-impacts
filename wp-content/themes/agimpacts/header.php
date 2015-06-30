@@ -30,7 +30,8 @@
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.noty.packaged.min.js"></script>
     <script src="<?php echo get_template_directory_uri(); ?>/js/main.js"></script>
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/pure-min-custom.css">
+    <!--<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/pure-min-custom.css">-->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" >
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/main.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/jquery.validity.css">

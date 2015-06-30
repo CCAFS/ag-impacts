@@ -11,6 +11,12 @@ $version = '1.2';
 <script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false'></script>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.css?<?php echo $version; ?>">
 <script src="<?php echo get_template_directory_uri(); ?>/js/select2/4.0.0/select2.min.js?<?php echo $version; ?>"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script src="http://code.highcharts.com/maps/modules/map.js"></script>
+<script src="http://code.highcharts.com/maps/modules/data.js"></script>
+<script src="http://code.highcharts.com/mapdata/custom/world.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/agimpact_filter.js?<?php echo $version; ?>"></script>
 <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/agimpact_filter.css?<?php echo $version; ?>">
 <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/jqueryui/dataTables.jqueryui.css">
@@ -189,7 +195,7 @@ $version = '1.2';
               </tr>
             </table>
             <br>
-            <button class="pure-button pure-button-primary" type="submit" >Search</button>
+            <button class="pure-button pure-button-primary" type="button" id="search">Search</button>
             <button class="pure-button pure-button-primary" type="button" name="reset" id="reset">Reset</button>
           </fieldset>
         </td>
@@ -198,14 +204,20 @@ $version = '1.2';
   </form>
 
   <p>
-  <div id='downloadFile'>
-    <h3>Download Data</h3>
-    <a href='#' onClick='downloadData()' title='Download Data for Excel'><img style='heigth:60px;width:60px;' src='<?php echo get_template_directory_uri() ?>/img/excel.png'></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href='#' onClick='downloadDataCSV()'title='Download Data for CSV'><img style='heigth:60px;width:60px;' src='<?php echo get_template_directory_uri() ?>/img/csv.png'></a>
-    <!--<button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFields()'>View all fields</button>-->
-    <button class='pure-button pure-button-primary' type='button' name='viewall' id='viewall' onClick='viewAllFieldsh()'>View all fields</button>
+
+  <div id="ag-menu" class="pure-menu pure-menu-horizontal" style="display: none">
+    <ul class="pure-menu-list">
+      <li class="pure-menu-item pure-menu-selected pure-button-primary"><a href="#" class="pure-menu-link ag-menu" onClick='viewAllFieldsh()'>View all fields</a></li>
+      <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover pure-button-primary">
+        <a href="#" id="menuLink1" class="pure-menu-link ag-menu">Download Data</a>
+        <ul class="pure-menu-children">
+          <li class="pure-menu-item"><a href="#" class="pure-menu-link" onClick='downloadData()'>Excel</a></li>
+          <li class="pure-menu-item"><a href="#" class="pure-menu-link" onClick='downloadDataCSV()'>CSV</a></li>
+        </ul>
+      </li>
+    </ul>
   </div>
-  <div id="resultsx"><h3>Results</h3>
+  <div id="resultsx" style="display: none"><h3>Results</h3>
     <table id='resulttablex' name='resulttablex' class="display">
       <thead>
         <tr>
@@ -268,7 +280,7 @@ $version = '1.2';
 //  }
 //
 //  window.eqfeed_callback = function(results) {
-////    var image = "<?php // bloginfo('template_directory');                                     ?>/images/ccafs_sites-miniH.png";
+////    var image = "<?php // bloginfo('template_directory');                                        ?>/images/ccafs_sites-miniH.png";
 //    var infobox;
 //    var markeri = new google.maps.Marker();
 //    $("#map_title").append("<bold> (" + results.features.length + " estimates on the map)</bold>");
@@ -299,7 +311,7 @@ $version = '1.2';
 //          google.maps.event.addListener(infobox, "closeclick", function() {
 //            markeri.setMap(null);
 //          });
-////          var imagei = "<?php // bloginfo('template_directory');                                     ?>/images/ccafs_sites-miniI.png";
+////          var imagei = "<?php // bloginfo('template_directory');                                        ?>/images/ccafs_sites-miniI.png";
 //          var coords = results.features[i].geometry.coordinates;
 //          var latLng = new google.maps.LatLng(coords[1], coords[0]);
 //          markeri = new google.maps.Marker({
@@ -346,341 +358,6 @@ $version = '1.2';
 //
   //  google.maps.event.addDomListener(window, 'load', initialize);
 //
-  $(document).ready(function() {
-    $('#resulttablex').dataTable({
-      'scrollX': true,
-      'jQueryUI': true,
-      "processing": true,
-      "serverSide": true,
-      "ajax": {
-        url: templateUrl + "/wp-content/themes/agimpacts/dataTableFilter.php",
-        data: function(d) {
-          d.crop = $('#crop').val();
-          d.model = $('#model').val();
-          d.scale = $('#scale').val();
-          d.climate = $('#climate').val();
-          d.baseline = $('#baseline').val();
-          d.period = $('#period').val();
-          d.country = $('#country').val();
-          d.continents = $('#continents').val();
-          d.regions = $('#regions').val();
-          d.adaptation = $('#adaptation').val();
-        }
-      }
-    });
-  });
-</script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="http://code.highcharts.com/maps/modules/map.js"></script>
-<script src="http://code.highcharts.com/maps/modules/data.js"></script>
-<script src="http://code.highcharts.com/mapdata/custom/world.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-<!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
-<script type="text/javascript">
-//  google.load("visualization", "1", {packages: ["geochart"]});
-//  google.setOnLoadCallback(drawRegionsMap);
-//
-//  function drawRegionsMap() {
-//
-//    $.ajax({
-//      url: templateUrl + "/wp-content/themes/agimpacts/filteredTable.php?type=geochart",
-//      type: "POST",
-//      data: $('#filtersh').serialize(),
-//      success: function(result) {
-//        if (!result) {
-//          var objJSON = [
-//            ['Country', 'DY'],
-//          ];
-//        } else {
-//          var objJSON = eval("(function(){return " + result + ";})()");
-//        }
-//        var data = google.visualization.arrayToDataTable(objJSON);
-//        /*
-//         [
-//         ['Country','DY'],
-//         ['Germany', 200],
-//         ['United States', 300],
-//         ['Brazil', 400],
-//         ['Canada', 500],
-//         ['France', 600],
-//         ['RU', 700]
-//         ] 
-//         */
-//        var options = {
-////      region: '002', // Africa
-////      colorAxis: {colors: ['#00853f', 'black', '#e31b23']},
-//          backgroundColor: '#81d4fa'
-//        };
-//
-//        var chart = new google.visualization.GeoChart(document.getElementById('map-canvas'));
-//        chart.draw(data, options);
-//      },
-//      complete: function() {
-////        $("#loading").fadeOut('slow');
-  ////      $("#result").show();
-//      }
-//    });
-//  }
-
-  $(function() {
-    $("#mapDropdown").change(function() {
-      var $selectedItem = $("option:selected", this),
-              mapDesc = $selectedItem.text(),
-              mapKey = this.value;
-      minColor = '#F75945', maxColor = '#102D4C';
-      if (mapKey == 1) {
-        //        minColor = '#990041',
-//        maxColor = '#990041';
-      }
-
-      $.ajax({
-        url: templateUrl + "/wp-content/themes/agimpacts/filteredTable.php?type=highmap",
-        type: "POST",
-        data: $('#filtersh').serialize(),
-        success: function(result) {
-          if (result == 'null') {
-            var objJSON = [
-              ['Country', 'DY'],
-            ];
-          } else {
-            var objJSON = eval("(function(){return " + result + ";})()");
-            $('#mapBox').show();
-          }
-          var data = objJSON;
-          $('#map-geochart').highcharts('Map', {
-            chart: {
-//              borderWidth: 1
-            },
-            colors: ['rgba(19,64,117,0.05)', 'rgba(19,64,117,0.2)', 'rgba(19,64,117,0.4)',
-              'rgba(19,64,117,0.5)', 'rgba(19,64,117,0.6)', 'rgba(19,64,117,0.8)', 'rgba(19,64,117,1)'],
-            title: {
-              text: 'Projected yield change by country'
-            },
-            mapNavigation: {
-              enabled: true
-            },
-            legend: {
-              title: {
-                text: mapDesc + ' projected yield change (%)',
-                style: {
-                  color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
-                }
-              },
-//              align: 'left',
-//              verticalAlign: 'bottom',
-//              floating: true,
-//              layout: 'vertical',
-//              valueDecimals: 0
-            },
-            colorAxis: {
-//              minColor: '#313695',
-//              maxColor: '#a50026',
-              min: -100,
-              max: 100,
-              stops: [
-                [0, '#a50026'],
-                [0.5, '#e7f5ea'],
-                [0.9, '#313695']
-            ]
-//              dataClasses: [{
-//                  from: 75,
-//                  to: 100,
-//                  color: '#313695'
-//                }, {
-//                  from: 50,
-//                  to: 75,
-//                  color: '#588cc0'
-//                }, {
-//                  from: 25,
-//                  to: 50,
-//                  color: '#a1d1e4'
-//                }, {
-//                  from: 0,
-//                  to: 25,
-//                  color: '#e7f5ea'
-//                }, {
-//                  from: -25,
-//                  to: 0,
-//                  color: '#fee79b'
-//                }, {
-//                  from: -50,
-//                  to: -25,
-//                  color: '#fba25b'
-//                }, {
-//                  from: -75,
-//                  to: -50,
-//                  color: '#e34932'
-//                }, {
-//                  from: -100,
-//                  to: -75,
-//                  color: '#a50026'
-//                }]
-            },
-            series: [{
-                name: 'median',
-                data: data[mapKey],
-                mapData: Highcharts.geojson(Highcharts.maps['custom/world']),
-                joinBy: ['iso-a2', 'code'],
-                animation: true,
-                name: 'Projected yield change',
-                        states: {
-                          hover: {
-                            color: '#BADA55'
-                          }
-                        },
-                tooltip: {
-                  //                valueSuffix: '%',
-                  useHTML: true,
-                  headerFormat: '<span style="font-weight: bold;">{point.key}</span><br/>',
-                  pointFormat: '<span style="font-weight: bold;">Median</span>: {point.median:.1f} ± {point.dev:.1f}%<br><span style="font-weight: bold;">Mean</span>: {point.mean:.1f} %<br><span style="font-weight: bold;">Range</span>: [{point.min:.1f}, {point.max:.1f}]<br><span style="font-weight: bold;">N. of stimates</span>: {point.num}'
-                }
-              }]
-          });
-        },
-        complete: function() {
-        }
-      })
-    });
-    $('#mapDropdown').change();
-
-    $.ajax({
-      url: templateUrl + "/wp-content/themes/agimpacts/filteredTable.php?type=columnChart",
-      type: "POST",
-      data: $('#filtersh').serialize(), success: function(result) {
-        if (result == 'null') {
-          return;
-        } else {
-          var objJSON = eval("(function(){return " + result + ";})()");
-          $('#column-chart').show();
-        }
-        var data = objJSON;
-        $('#column-chart').highcharts({
-          chart: {
-            zoomType: 'xy'
-          },
-          title: {
-            text: 'Projected yield change by country'
-          },
-          tooltip: {
-            shared: true
-          }, yAxis: {// Secondary yAxis
-            title: {
-              text: 'Yield change (%)',
-              style: {
-                //                color: Highcharts.getOptions().colors[0]
-              }
-            },
-            labels: {format: '{value} %',
-              style: {
-                //                color: Highcharts.getOptions().colors[0]
-              }
-            },
-            //            opposite: true
-          },
-          xAxis: {
-            type: 'category',
-            labels: {
-              rotation: -45,
-              style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-              }
-            }
-          },
-          credits: {
-            enabled: false
-          },
-          series: [{
-              name: 'Delta Yield',
-              type: 'column',
-              data: data[0],
-              tooltip: {
-                pointFormat: '<span style="font-weight: bold; color: {series.color}">ΔYield</span>: <b>{point.y:.1f} %</b> '
-              },
-              dataLabels: {
-                enabled: true, //                rotation: -90,
-                color: '#FFFFFF',
-                align: 'center',
-                format: '{point.y:.1f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                  fontSize: '13px',
-                  fontFamily: 'Verdana, sans-serif'
-                }
-              }
-            }, {
-              name: 'Crop error',
-              type: 'errorbar',
-              //              yAxis: 1,
-              data: data[1],
-              tooltip: {
-                pointFormat: '(error range: ({point.low})-({point.high}) %)<br/>'
-              }
-            }]
-        });
-      },
-      complete: function() {
-      }
-    });
-
-    $.ajax({
-      url: templateUrl + "/wp-content/themes/agimpacts/filteredTable.php?type=scatterChart",
-      type: "POST",
-      data: $('#filtersh').serialize(), success: function(result) {
-        if (result == 'null') {
-          return;
-        } else {
-          var objJSON = eval("(function(){return " + result + ";})()");
-          $('#scatter-chart').show();
-        }
-        var data = objJSON;
-        $('#scatter-chart').highcharts({
-          xAxis: {
-            title: {
-              text: 'ΔTemperature change(C°)'
-            }
-          },
-          yAxis: {
-            title: {
-              text: 'ΔYield change (%)'
-            }
-          },
-          tooltip: {
-            shared: true
-          },
-          title: {
-            text: 'Yield response by Temperature change'
-          },
-          series: [{
-              type: 'scatter',
-              name: 'Temperature',
-              data: data[0],
-              tooltip: {
-                pointFormat: 'Temperature: {point.x:.1f}C° <br/>Yield: {point.y:.1f}%<br/>'
-              },
-              marker: {
-                radius: 4
-              }
-            }, {
-              type: 'spline',
-              name: 'Moving average',
-              data: data[1],
-              tooltip: {
-                headerFormat: '',
-                pointFormat: 'Yield moving average: {point.y:.2f}%<br/>'
-              },
-              marker: {
-                lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[3],
-                fillColor: 'white'
-              }
-            }]
-        });
-      }
-    });
-  });
 </script>
 <?php
 get_footer();
